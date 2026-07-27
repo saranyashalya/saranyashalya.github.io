@@ -1,0 +1,1 @@
+!function(){var e=document.getElementById("sidebar-toggle");e&&(e.addEventListener("click",function(){document.body.classList.toggle("sidebar-open")}),document.querySelectorAll(".sidebar-nav a").forEach(function(e){e.addEventListener("click",function(){window.innerWidth<=768&&document.body.classList.remove("sidebar-open")})}))}();
