@@ -1,0 +1,8 @@
+# Social media and contact links displayed on the about page.
+# Plugin docs: https://github.com/george-gca/jekyll-socials
+# IMPORTANT: keys must match the plugin's known networks (e.g. linkedin_username, github_username).
+cv_pdf: /assets/pdf/saranya-govindaraj-resume.pdf
+email: saranya.shalya@gmail.com
+linkedin_username: saranya-govindaraj-5abb4424
+github_username: saranya-govindaraj
+rss_icon: true

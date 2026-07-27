@@ -1,0 +1,175 @@
+cv:
+  name: Saranya Govindaraj
+  label: Senior Data Scientist · GenAI & Agentic AI Engineer
+  email: saranya.shalya@gmail.com
+  location: Stockholm, Sweden
+  image: ""
+  summary: >
+    Senior Data Scientist at Ericsson Stockholm with 14+ years of experience across
+    machine learning, deep learning, NLP, GenAI, and cloud (AWS, GCP). Currently
+    builds Agentic AI and RAG systems on AWS Bedrock — knowledge bases, AgentCore
+    runtime, Strands agents, knowledge-graph retrieval (LightRAG), and Agentic RAG
+    evaluation with RAGAS. Patent holder, certified AWS AI Practitioner and GCP
+    Professional ML Engineer.
+
+  social_networks:
+    - network: LinkedIn
+      username: saranya-govindaraj-5abb4424
+    - network: GitHub
+      username: saranya-govindaraj
+
+  address:
+    city: Stockholm
+    countryCode: SE
+
+  sections:
+    Experience:
+      - company: Ericsson
+        position: Senior Data Scientist
+        location: Stockholm, Sweden
+        start_date: 2022-02
+        end_date: present
+        summary: >
+          Lead GenAI / RAG / Agentic AI initiatives in the System Comprehension Lab
+          (SCL) and Product Information Assistant (PIA) programs.
+        highlights:
+          - "**SCL — System Comprehension Lab:** Contributed to the RAG data preprocessing pipeline using AWS Step Functions and Lambda; built Python packages for downloading and processing files from internal docstores."
+          - "Built knowledge bases and Agents on **AWS Bedrock** for RAG applications, and used **Bedrock Data Automation** for multimodal preprocessing."
+          - "Currently using **AWS Bedrock AgentCore Runtime** to automate deployment of Strands Agents, with observability for token usage and traceability."
+          - "Working on **LightRAG** — a knowledge-graph-based solution to enhance regular RAG performance."
+          - "Driving **Agentic RAG evaluation** with RAGAS on benchmark and live data."
+          - "Building Agentic AI solutions with the **Claude Code Harness** and AgentCore Harness — producing reusable agentic packages (subagents, skills, MCPs, hooks)."
+
+      - company: Ericsson
+        position: Data Scientist
+        location: Stockholm, Sweden
+        start_date: 2020-01
+        end_date: 2022-02
+        summary: GAIA — TAO program, focused on ML for radio access networks.
+        highlights:
+          - "**Anomaly detection** on transport network log files using ML and DL models."
+          - "Used statistical models to compare pre- and post-upgrade test runs (EMCA traces) and built **regression models** to predict baseband scheduler metrics, fine-tuned for higher accuracy."
+          - "Developed a **Cell and Site Categorizer** based on traffic volume, user experience, and cell load metrics using Random Forest and XGBoost."
+
+      - company: Honeywell
+        position: Data Scientist
+        location: Pune, India
+        start_date: 2018-08
+        end_date: 2019-09
+        summary: Sales demand forecasting for SIOP (Sales, Inventory & Operations Planning).
+        highlights:
+          - "Built **time-series models in R** for SIOP spare-parts forecasting."
+          - "Trained and tested multiple time-series models on different SIOP product family SKUs and selected the champion model with the lowest error."
+          - "Handled one-off spiking SKUs to derive a generalized forecast."
+          - "Archived forecast results in SQL and tracked accuracy over time."
+
+      - company: Infosys
+        position: Technology Analyst — Data
+        location: Pune, India
+        start_date: 2015-08
+        end_date: 2018-08
+        summary: Predictive analytics PoCs for various clients.
+        highlights:
+          - "Predictive analytics in **R Studio** using statistical, ML, and deep-learning algorithms."
+          - "Worked with **regression, classification, and clustering** techniques to train, test, and improve model accuracy."
+          - "Presented solutions to stakeholders and iterated based on feedback."
+
+      - company: Infosys
+        position: Application Support Analyst — Change & Release Manager
+        location: Chennai, India / Sweden
+        start_date: 2010-11
+        end_date: 2015-07
+        summary: Pharma client — Quality Control applications.
+        highlights:
+          - "Managed change and release management for critical Quality Control applications."
+          - "Represented the QC team in task-force meetings as Change & Release Manager."
+          - "Onsite in **Sweden** as the QC application's primary customer point of contact."
+
+    Education:
+      - institution: Anna University — Karpagam College of Engineering
+        location: Tamil Nadu, India
+        area: Computer Science
+        studyType: Bachelor of Engineering
+        start_date: 2006
+        end_date: 2010
+        highlights:
+          - "**University 3rd rank** in Computer Science department out of 200+ colleges."
+
+    Certificates:
+      - name: AWS Certified AI Practitioner
+        date: 2025
+        issuer: Amazon Web Services
+        icon: fa-brands fa-aws
+      - name: GCP — Professional Machine Learning Engineer
+        date: 2024
+        issuer: Google Cloud
+        icon: fa-brands fa-google
+      - name: GCP — GenAI L400 Skills Badge (Building Generative AI Applications with Vertex AI)
+        date: 2024
+        issuer: Google Cloud
+        icon: fa-brands fa-google
+
+    Awards:
+      - title: University 3rd Rank — Computer Science
+        authors:
+          - Anna University
+        date: 2010
+        awarder: Anna University, Tamil Nadu
+        summary: Ranked 3rd out of 200+ colleges in the Computer Science department.
+
+      - title: "Patent (granted): Methods and apparatuses for detecting and localizing faults using machine learning models"
+        authors:
+          - Tahar Zanouda
+          - Saranya Govindaraj
+          - Dominik Budyn
+          - Martin Rydar
+        date: 2026-03-31
+        awarder: USPTO — Telefonaktiebolaget LM Ericsson AB
+        url: https://patents.google.com/patent/US12592953B2/en
+        summary: US12592953B2 — pre-processing data for training ML models to detect anomalies during procedure execution at network nodes.
+
+    Skills:
+      - name: GenAI & LLMs
+        level: Expert
+        icon: fa-solid fa-brain
+        keywords: "RAG, Agentic AI, AWS Bedrock, AgentCore, Strands Agents, LightRAG, RAGAS, MCP, Claude Code, Kiro, OpenAI text-ada, Hugging Face GTE"
+      - name: Machine Learning
+        level: Expert
+        icon: fa-solid fa-chart-line
+        keywords: "Regression, Classification, Clustering, Random Forest, XGBoost, Time Series Forecasting, Anomaly Detection"
+      - name: Deep Learning & NLP
+        level: Advanced
+        icon: fa-solid fa-network-wired
+        keywords: "PyTorch, NLP, Vector Embeddings, Knowledge Graphs"
+      - name: Cloud & DevOps
+        level: Advanced
+        icon: fa-solid fa-cloud
+        keywords: "AWS, GCP, Docker, Kubernetes, AWS Step Functions, AWS Lambda, Airflow"
+      - name: Programming
+        level: Expert
+        icon: fa-solid fa-code
+        keywords: "Python, R, SQL"
+      - name: Vector Databases
+        level: Advanced
+        icon: fa-solid fa-database
+        keywords: "FAISS, Chroma, OpenSearch"
+      - name: Tools
+        level: Advanced
+        icon: fa-solid fa-toolbox
+        keywords: "JupyterLab, Tableau, ServiceNow, Remedy on Demand"
+
+    Languages:
+      - name: English
+        summary: Fluent
+      - name: Tamil
+        summary: Native
+      - name: Swedish
+        summary: Beginner
+
+    Interests:
+      - name: GenAI & Agentic AI
+        icon: fa-solid fa-robot
+        keywords: "RAG, knowledge graphs, agent harnesses, evaluation, observability"
+      - name: Beyond work
+        icon: fa-solid fa-heart
+        keywords: "crochet, exploring AI, family time"

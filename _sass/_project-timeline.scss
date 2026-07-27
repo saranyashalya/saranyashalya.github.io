@@ -1,0 +1,116 @@
+/******************************************************************************
+ * Project timeline — vertical, with a left rail and bullet markers.
+ ******************************************************************************/
+
+@use "variables" as v;
+
+.project-timeline {
+  position: relative;
+  margin: 1.5rem 0 2rem;
+  padding-left: 2rem;
+
+  /* The vertical rail */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.45rem;
+    width: 2px;
+    background-color: var(--global-divider-color, rgba(128, 128, 128, 0.25));
+  }
+}
+
+.project-entry {
+  position: relative;
+  margin-bottom: 1.75rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--global-surface-color, var(--global-bg-color));
+  border: 1px solid var(--global-divider-color, rgba(128, 128, 128, 0.15));
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+    border-color: var(--global-theme-color);
+  }
+
+  /* The dot on the rail */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 1.5rem;
+    left: -1.6rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background-color: var(--global-theme-color);
+    box-shadow: 0 0 0 4px var(--global-bg-color), 0 0 0 5px var(--global-theme-color);
+  }
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  font-size: 0.78rem;
+  color: var(--global-text-color-light);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  .project-period {
+    font-weight: 700;
+    color: var(--global-theme-color);
+  }
+
+  .project-org {
+    font-weight: 500;
+  }
+}
+
+.project-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0.1rem 0 0.4rem;
+  color: var(--global-text-color);
+  letter-spacing: -0.01em;
+}
+
+.project-tagline {
+  font-size: 0.98rem;
+  color: var(--global-text-color);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.project-stack {
+  font-size: 0.82rem;
+  color: var(--global-text-color-light);
+  margin: 0 0 0.75rem;
+  padding: 0.4rem 0.7rem;
+  background-color: var(--global-muted-bg-color, rgba(128, 128, 128, 0.06));
+  border-radius: 6px;
+  display: inline-block;
+
+  strong {
+    color: var(--global-text-color);
+  }
+}
+
+.project-bullets {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+
+  li {
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+
+    &::marker {
+      color: var(--global-theme-color);
+    }
+  }
+}

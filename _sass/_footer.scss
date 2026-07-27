@@ -1,0 +1,47 @@
+/*******************************************************************************
+ * Footer styles
+ ******************************************************************************/
+
+footer.fixed-bottom {
+  background-color: var(--global-surface-color);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--global-divider-color);
+
+  .container {
+    color: var(--global-text-color-light);
+    padding-top: 12px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  a {
+    color: var(--global-theme-color);
+
+    &:hover {
+      color: var(--global-hover-text-color);
+      text-decoration: none;
+    }
+  }
+}
+
+footer.sticky-bottom {
+  border-top: 1px solid var(--global-divider-color);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 0.85rem;
+  background-color: var(--global-surface-color);
+
+  .container {
+    text-align: center;
+    color: var(--global-text-color-light);
+  }
+
+  a {
+    color: var(--global-theme-color);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--global-hover-text-color);
+    }
+  }
+}

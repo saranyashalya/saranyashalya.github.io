@@ -1,0 +1,95 @@
+{% comment %} Find the about page so we can pull profile info from it. {% endcomment %}
+{% assign about_page = site.pages | where: 'permalink', '/' | first %}
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+    <!-- Profile block -->
+    <div class="sidebar-profile">
+      {% if about_page.profile.image %}
+        {% assign profile_image_path = about_page.profile.image | prepend: 'assets/img/' %}
+        {%
+          include figure.liquid
+          loading="eager"
+          path=profile_image_path
+          class="img-fluid rounded-circle sidebar-avatar"
+          sizes="200px"
+          alt="profile photo"
+          cache_bust=true
+        %}
+      {% endif %}
+
+      <h2 class="sidebar-name">
+        <a href="{{ '/' | relative_url }}">
+          <span class="font-weight-bold">{{ site.first_name }}</span>
+          {{ site.last_name }}
+        </a>
+      </h2>
+
+      {% if about_page.subtitle %}
+        <p class="sidebar-subtitle">{{ about_page.subtitle }}</p>
+      {% endif %}
+
+      {% if about_page.profile.more_info %}
+        <div class="sidebar-more-info">{{ about_page.profile.more_info }}</div>
+      {% endif %}
+
+      <div class="sidebar-socials">{% social_links %}</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <ul>
+        <!-- About / home link -->
+        <li class="{% if page.permalink == '/' %}active{% endif %}">
+          <a href="{{ '/' | relative_url }}">{{ about_page.title | default: 'about' }}</a>
+        </li>
+
+        {% assign sorted_pages = site.pages | sort: 'nav_order' %}
+        {% for p in sorted_pages %}
+          {% if p.nav and p.autogen == null %}
+            {% assign parent_link = p.permalink | remove: 'index.html' %}
+            {%- if p.permalink contains '://' -%}
+              {%- assign url = p.permalink -%}
+            {%- elsif p.permalink contains '/blog/' -%}
+              {%- assign url = '/blog/' -%}
+            {%- else -%}
+              {%- assign url = p.url -%}
+            {%- endif %}
+            <li class="{% if page.url contains parent_link %}active{% endif %}">
+              <a href="{{ url | relative_url }}">{{ p.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <!-- Theme toggle and search at the bottom -->
+    <div class="sidebar-controls">
+      {% if site.search_enabled %}
+        <button id="search-toggle" title="Search" onclick="openSearchModal()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      {% endif %}
+      {% if site.enable_darkmode %}
+        <button id="light-toggle" title="Change theme">
+          <i class="fa-half-sun-moon" id="light-toggle-system"></i>
+          <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
+          <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile sidebar toggle (shown only on small screens) -->
+<button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+{% if site.enable_progressbar %}
+  <progress id="progress" value="0">
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+  </progress>
+{% endif %}
