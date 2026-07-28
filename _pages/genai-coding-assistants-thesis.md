@@ -1,11 +1,8 @@
 ---
-layout: post
+layout: page
 title: "Evaluating GenAI Coding Assistants in Enterprise Software Development"
-date: 2026-07-27
+permalink: /supervision/genai-coding-assistants-thesis/
 description: "A Master's thesis examining how developers perceive AI coding assistants (Amazon Q Developer & AWS Kiro) using the SPACE framework and Task-Technology Fit theory."
-tags: [genai, coding-assistants, developer-productivity, research]
-categories: [research]
-featured: false
 ---
 
 <style>
