@@ -55,17 +55,6 @@ ninja.data = [{
             window.location.href = "/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/";
           
         },
-      },{id: "post-evaluating-genai-coding-assistants-in-enterprise-software-development",
-        
-          title: "Evaluating GenAI Coding Assistants in Enterprise Software Development",
-        
-        description: "A Master&#39;s thesis examining how developers perceive AI coding assistants (Amazon Q Developer &amp; AWS Kiro) using the SPACE framework and Task-Technology Fit theory.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/genai-coding-assistants-thesis/";
-          
-        },
       },{id: "news-earned-the-gcp-professional-machine-learning-engineer-certification-and-the-gcp-genai-l400-skills-badge",
           title: 'Earned the GCP Professional Machine Learning Engineer certification and the GCP GenAI L400...',
           description: "",
