@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: Senior Data Scientist | GenAI &amp; Agentic AI Engineer · <a href="https://www.ericsson.com" target="_blank">Ericsson</a>, Stockholm
 
@@ -21,7 +21,7 @@ announcements:
   limit: 5
 
 latest_posts:
-  enabled: true
+  enabled: false
   scrollable: true
   limit: 3
 ---

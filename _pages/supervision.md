@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /supervision/
-title: thesis supervision
+title: Thesis Supervision
 description: Master's thesis projects I have supervised or co-supervised.
 nav: true
 nav_order: 4
