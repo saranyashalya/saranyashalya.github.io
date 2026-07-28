@@ -184,8 +184,7 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
 | | |
 |---|---|
 | **Interns** | Aditya Khadkikar, Oscar Stackenland |
-| **Supervisor** | Saranya Govindaraj (Ericsson) |
+| **Supervisors** | Saranya Govindaraj, Sarbashis Das (Ericsson) |
+| **Project** | Product Information Assistant (PIA) |
 | **Team** | System Comprehension Lab, Ericsson Stockholm |
 | **Period** | Summer 2024 |
-| **Domain** | Product Information Assistant (PIA) |
-| **Data Source** | UnitDB Knowledge Graph (RDF/SPARQL) |
