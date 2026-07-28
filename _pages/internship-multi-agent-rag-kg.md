@@ -185,5 +185,5 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
 |---|---|
 | **Interns** | Aditya Khadkikar, Oscar Stackenland |
 | **Supervisors** | Saranya Govindaraj, Sarbashis Das (Ericsson) |
-| **Project** | Enterprise Product Intelligence |
+| **Project** | Product Information Assistant (PIA) |
 | **Period** | Summer 2024 |
