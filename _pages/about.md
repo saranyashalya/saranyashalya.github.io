@@ -26,9 +26,38 @@ latest_posts:
   limit: 3
 ---
 
-I am a **Senior Data Scientist at [Ericsson](https://www.ericsson.com)** in Stockholm, where I build **Generative AI and Agentic AI** systems on AWS Bedrock — including RAG knowledge bases, AgentCore-deployed Strands agents, and reusable agentic packages (subagents, skills, MCPs, hooks). Over the past decade I've worked across **machine learning, deep learning, NLP, anomaly detection, and time-series forecasting** for telecom, industrial, and pharma domains.
+I am a **Senior Data Scientist at [Ericsson](https://www.ericsson.com)** in Stockholm, building production-grade **Generative AI and Agentic AI solutions**. My work spans the full lifecycle — from designing retrieval architectures and knowledge graphs to deploying autonomous agents and rigorously evaluating their output in production.
 
-My current focus is building a [Knowledge Fabric](/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/) — a multi-layer AI architecture that transforms scattered technical documentation into a queryable intelligence layer by combining knowledge graphs, vector search, entity resolution, and tool-equipped AI agents. I'm particularly excited about how **agent harnesses** (Claude Code, AgentCore) are reshaping how teams build and ship AI software.
+I specialize in **end-to-end RAG evaluation**: designing evaluation strategies that combine open-source frameworks (RAGAS), AWS AgentCore evaluation capabilities, and custom rubrics tailored to domain-specific quality criteria — ensuring RAG systems are not just functional but reliably accurate at scale.
+
+Over 14+ years I've worked across **telecom, industrial, and pharma** domains — from classical ML (anomaly detection, time-series forecasting, NLP) to today's agentic AI systems built on AWS Bedrock.
+
+<style>
+  .about-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 32px 0; }
+  .about-card { background: var(--global-surface-color, #161b22); border: 1px solid var(--global-divider-color, #30363d); border-radius: 12px; padding: 24px; transition: all 0.25s ease; text-decoration: none !important; display: block; }
+  .about-card:hover { border-color: var(--global-theme-color, #58a6ff); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88, 166, 255, 0.1); }
+  .about-card .card-icon { font-size: 1.8em; margin-bottom: 12px; }
+  .about-card .card-title { font-size: 1em; font-weight: 700; color: var(--global-text-color, #e6edf3); margin-bottom: 8px; }
+  .about-card .card-desc { font-size: 0.82em; color: var(--global-text-color-light, #8b949e); line-height: 1.6; }
+</style>
+
+<div class="about-cards">
+  <a href="/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/" class="about-card">
+    <div class="card-icon">🕸️</div>
+    <div class="card-title">Knowledge Fabric</div>
+    <div class="card-desc">Multi-layer AI architecture combining knowledge graphs, vector search, entity resolution, and tool-equipped agents for enterprise retrieval.</div>
+  </a>
+  <div class="about-card">
+    <div class="card-icon">📊</div>
+    <div class="card-title">RAG Evaluation</div>
+    <div class="card-desc">End-to-end evaluation strategies using RAGAS, LLM-as-a-judge, AWS AgentCore evaluation, and custom rubrics for production-grade quality assurance.</div>
+  </div>
+  <div class="about-card">
+    <div class="card-icon">🤖</div>
+    <div class="card-title">Agentic AI</div>
+    <div class="card-desc">Building reusable agent components (sub-agents, skills, MCPs, hooks) on Claude Code, Kiro, and AgentCore harnesses for scalable AI development.</div>
+  </div>
+</div>
 
 ### Beyond work
 
