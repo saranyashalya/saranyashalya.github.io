@@ -28,11 +28,11 @@ latest_posts:
 
 I am a **Senior Data Scientist at [Ericsson](https://www.ericsson.com)** in Stockholm, where I build **Generative AI and Agentic AI** systems on AWS Bedrock — including RAG knowledge bases, AgentCore-deployed Strands agents, and reusable agentic packages (subagents, skills, MCPs, hooks). Over the past decade I've worked across **machine learning, deep learning, NLP, anomaly detection, and time-series forecasting** for telecom, industrial, and pharma domains.
 
-My current focus is making RAG systems work in production: knowledge-graph-enhanced retrieval (LightRAG), agentic RAG evaluation with RAGAS, and multimodal data automation with AWS Bedrock Data Automation. I'm particularly excited about how **agent harnesses** (Claude Code, AgentCore) are reshaping how teams build and ship AI software.
+My current focus is building a [Knowledge Fabric](/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/) — a multi-layer AI architecture that transforms scattered technical documentation into a queryable intelligence layer by combining knowledge graphs, vector search, entity resolution, and tool-equipped AI agents. I'm particularly excited about how **agent harnesses** (Claude Code, AgentCore) are reshaping how teams build and ship AI software.
 
 ### Beyond work
 
-When I'm not in a notebook, you'll usually find me crocheting, exploring the latest in AI, or spending time with family.
+When I'm not working, you'll usually find me crocheting, exploring the latest in AI, or spending time with family.
 
 ### Get in touch
 

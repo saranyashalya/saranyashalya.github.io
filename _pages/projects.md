@@ -92,4 +92,19 @@ nav_order: 3
     </ul>
   </div>
 
+  <div class="project-entry">
+    <div class="project-meta">
+      <span class="project-period">Nov 2010 — Jul 2015</span>
+      <span class="project-org">Infosys · Chennai & Sweden</span>
+    </div>
+    <h3 class="project-title">Change & Release Management — Pharma</h3>
+    <p class="project-tagline">Application support and change/release management for critical quality control applications in pharma.</p>
+    <p class="project-stack"><strong>Stack:</strong> ServiceNow · Remedy on Demand · ITIL processes</p>
+    <ul class="project-bullets">
+      <li>Managed <strong>Change and Release management</strong> processes for critical Quality Control applications at a major pharmaceutical client.</li>
+      <li>Represented QC team in <strong>task force meetings</strong> as Change and Release Manager.</li>
+      <li>Served as <strong>primary onsite customer point of contact</strong> in Sweden for QC application support.</li>
+    </ul>
+  </div>
+
 </div>

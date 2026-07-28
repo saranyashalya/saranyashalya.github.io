@@ -6,17 +6,16 @@ cv:
   image: ""
   summary: >
     Senior Data Scientist at Ericsson Stockholm with 14+ years of experience across
-    machine learning, deep learning, NLP, GenAI, and cloud (AWS, GCP). Currently
-    builds Agentic AI and RAG systems on AWS Bedrock — knowledge bases, AgentCore
-    runtime, Strands agents, knowledge-graph retrieval (LightRAG), and Agentic RAG
-    evaluation with RAGAS. Patent holder, certified AWS AI Practitioner and GCP
-    Professional ML Engineer.
+    Data Analysis, Machine Learning, Deep Learning, NLP, GenAI, LLM, Cloud (AWS, GCP),
+    RAG, Bedrock, AgentCore, MCP, Claude Code, and Kiro. Currently builds Knowledge
+    Fabric-based RAG and Agentic AI systems. Patent holder, certified AWS AI
+    Practitioner and GCP Professional ML Engineer. Extremely curious and enthusiastic.
 
   social_networks:
     - network: LinkedIn
       username: saranya-govindaraj-5abb4424
     - network: GitHub
-      username: saranya-govindaraj
+      username: saranyashalya
 
   address:
     city: Stockholm
@@ -30,15 +29,18 @@ cv:
         start_date: 2022-02
         end_date: present
         summary: >
-          Lead GenAI / RAG / Agentic AI initiatives in the System Comprehension Lab
-          (SCL) and Product Information Assistant (PIA) programs.
+          Lead GenAI / RAG / Agentic AI initiatives across enterprise programs.
         highlights:
-          - "**SCL — System Comprehension Lab:** Contributed to the RAG data preprocessing pipeline using AWS Step Functions and Lambda; built Python packages for downloading and processing files from internal docstores."
-          - "Built knowledge bases and Agents on **AWS Bedrock** for RAG applications, and used **Bedrock Data Automation** for multimodal preprocessing."
-          - "Currently using **AWS Bedrock AgentCore Runtime** to automate deployment of Strands Agents, with observability for token usage and traceability."
-          - "Working on **LightRAG** — a knowledge-graph-based solution to enhance regular RAG performance."
-          - "Driving **Agentic RAG evaluation** with RAGAS on benchmark and live data."
-          - "Building Agentic AI solutions with the **Claude Code Harness** and AgentCore Harness — producing reusable agentic packages (subagents, skills, MCPs, hooks)."
+          - "Designed and built end-to-end RAG solutions using **Knowledge Fabric** architecture — integrating knowledge graphs, vector search, entity resolution, and AI agents for accurate enterprise retrieval."
+          - "Built data preprocessing pipelines for multimodal data processing using **AWS Step Functions** and **AWS Lambda**."
+          - "Hands-on experience with **AWS Bedrock** for creating knowledge bases and deploying AI agents for enterprise-grade RAG applications."
+          - "Working on **AWS Bedrock AgentCore** capabilities for deploying and managing AI agents with observability, token usage tracking, runtime monitoring, and traceability."
+          - "Improved RAG performance and accuracy by developing **graph-based retrieval** and optimization solutions."
+          - "Performed **Agentic RAG evaluation** using benchmark datasets and live production data with RAGAS metrics. Deep knowledge on LLM-as-a-judge evaluation strategies."
+          - "Building Agentic AI solutions using **Claude Code, Kiro, and AgentCore** agents as harnesses — creating reusable AI components (sub-agents, skills, MCPs, hooks) for scalable agent development."
+          - "Developed Python automation packages for generating **vector embeddings** from multiple document sources using open-source (Hugging Face GTE, BGE) and proprietary embedding models."
+          - "Designed **Apache Airflow** workflows to orchestrate large-scale data preprocessing, embedding generation, and ingestion pipelines."
+          - "Worked with vector databases (**FAISS, ChromaDB, OpenSearch**) for efficient storage, indexing, and semantic retrieval."
 
       - company: Ericsson
         position: Data Scientist
@@ -60,8 +62,7 @@ cv:
         highlights:
           - "Built **time-series models in R** for SIOP spare-parts forecasting."
           - "Trained and tested multiple time-series models on different SIOP product family SKUs and selected the champion model with the lowest error."
-          - "Handled one-off spiking SKUs to derive a generalized forecast."
-          - "Archived forecast results in SQL and tracked accuracy over time."
+          - "Outliers management and tracked the forecasts for evaluation."
 
       - company: Infosys
         position: Technology Analyst — Data
@@ -70,9 +71,8 @@ cv:
         end_date: 2018-08
         summary: Predictive analytics PoCs for various clients.
         highlights:
-          - "Predictive analytics in **R Studio** using statistical, ML, and deep-learning algorithms."
-          - "Worked with **regression, classification, and clustering** techniques to train, test, and improve model accuracy."
-          - "Presented solutions to stakeholders and iterated based on feedback."
+          - "Predictive analytics in **R Studio** using various statistical, machine learning, and deep learning algorithms."
+          - "Worked on **regression, classification, and clustering** techniques to train/test models and improve accuracy."
 
       - company: Infosys
         position: Application Support Analyst — Change & Release Manager
@@ -81,9 +81,8 @@ cv:
         end_date: 2015-07
         summary: Pharma client — Quality Control applications.
         highlights:
-          - "Managed change and release management for critical Quality Control applications."
-          - "Represented the QC team in task-force meetings as Change & Release Manager."
-          - "Onsite in **Sweden** as the QC application's primary customer point of contact."
+          - "Managed Change and Release management process for critical Quality Control applications. Involved in task force meetings to represent QC team as Change & Release Manager."
+          - "Onsite in **Sweden** as QC application's primary customer point of contact."
 
     Education:
       - institution: Anna University — Karpagam College of Engineering
@@ -129,34 +128,21 @@ cv:
         summary: US12592953B2 — pre-processing data for training ML models to detect anomalies during procedure execution at network nodes.
 
     Skills:
-      - name: GenAI & LLMs
-        level: Expert
-        icon: fa-solid fa-brain
-        keywords: "RAG, Agentic AI, AWS Bedrock, AgentCore, Strands Agents, LightRAG, RAGAS, MCP, Claude Code, Kiro, OpenAI text-ada, Hugging Face GTE"
-      - name: Machine Learning
-        level: Expert
-        icon: fa-solid fa-chart-line
-        keywords: "Regression, Classification, Clustering, Random Forest, XGBoost, Time Series Forecasting, Anomaly Detection"
-      - name: Deep Learning & NLP
-        level: Advanced
-        icon: fa-solid fa-network-wired
-        keywords: "PyTorch, NLP, Vector Embeddings, Knowledge Graphs"
-      - name: Cloud & DevOps
-        level: Advanced
-        icon: fa-solid fa-cloud
-        keywords: "AWS, GCP, Docker, Kubernetes, AWS Step Functions, AWS Lambda, Airflow"
-      - name: Programming
-        level: Expert
+      - name: Programming Languages
         icon: fa-solid fa-code
-        keywords: "Python, R, SQL"
-      - name: Vector Databases
-        level: Advanced
-        icon: fa-solid fa-database
-        keywords: "FAISS, Chroma, OpenSearch"
-      - name: Tools
-        level: Advanced
-        icon: fa-solid fa-toolbox
-        keywords: "JupyterLab, Tableau, ServiceNow, Remedy on Demand"
+        keywords: "Python, R"
+      - name: DevOps & Cloud
+        icon: fa-solid fa-cloud
+        keywords: "Docker, Kubernetes, AWS, GCP"
+      - name: Workflow Automation
+        icon: fa-solid fa-gears
+        keywords: "Airflow, AWS Step Functions"
+      - name: Machine Learning
+        icon: fa-solid fa-chart-line
+        keywords: "Python (ML), PyTorch (Deep Learning), JupyterLab"
+      - name: Coding Assistants
+        icon: fa-solid fa-robot
+        keywords: "Claude Code, Kiro"
 
     Languages:
       - name: English

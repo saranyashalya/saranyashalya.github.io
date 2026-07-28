@@ -62,7 +62,7 @@ description: "Summer 2024 internship project building a multi-agent RAG system t
 
 <h3 class="section-title">Project Overview</h3>
 
-This internship project developed a **multi-agent RAG prototype** for querying enterprise product documentation (UnitDB) using a combination of knowledge graph traversal and vector-based semantic search. The system enables engineers to ask natural language questions about hardware products (basebands, routers) and receive structured, accurate answers sourced from both graph queries and unstructured documentation.
+This internship project developed a **multi-agent RAG prototype** for querying enterprise product documentation (product knowledge base) using a combination of knowledge graph traversal and vector-based semantic search. The system enables engineers to ask natural language questions about hardware products (basebands, routers) and receive structured, accurate answers sourced from both graph queries and unstructured documentation.
 
 The core challenge: product information is distributed across a **knowledge graph** (structured RDF/SPARQL data) and **textual documentation** (unstructured attributes, installation guides). A single retrieval method cannot cover both — the system needs to intelligently route and combine results.
 
@@ -88,7 +88,7 @@ The core challenge: product information is distributed across a **knowledge grap
     <div class="arch-layer">
       <div class="icon">🔍</div>
       <div class="name">Vector Search Tool</div>
-      <div class="desc">OpenSearch embeddings → semantic retrieval from UnitDB docs</div>
+      <div class="desc">OpenSearch embeddings → semantic retrieval from product knowledge base docs</div>
     </div>
     <div class="arch-layer">
       <div class="icon">✅</div>
@@ -115,7 +115,7 @@ The core challenge: product information is distributed across a **knowledge grap
 The system uses **LangGraph** to orchestrate a stateful agent graph where:
 1. A **Router Agent** classifies the question intent and decides which tools to invoke
 2. A **KG Query Process** generates SPARQL queries against the product knowledge graph, with iterative error correction
-3. A **Vector Search Process** retrieves relevant chunks from OpenSearch (UnitDB embeddings)
+3. A **Vector Search Process** retrieves relevant chunks from OpenSearch (product knowledge base embeddings)
 4. An **Evaluator Agent** assesses whether the retrieved context is sufficient or needs re-invocation with different tools
 
 <h3 class="section-title">Key Technical Work</h3>
@@ -126,7 +126,7 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
     <p>LLM-generated SPARQL queries with iterative error correction — the system feeds validation errors back to the LLM for self-repair, enabling robust graph querying without manual query writing.</p>
   </div>
   <div class="finding-card">
-    <h4>UnitDB Vector Embedding</h4>
+    <h4>product knowledge base Vector Embedding</h4>
     <p>Extracted and embedded product attributes from RDF blank nodes into OpenSearch. Metadata-enriched documents enable filtered vector search by product model, capabilities, and attributes.</p>
   </div>
   <div class="finding-card">
@@ -161,7 +161,7 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
   <span class="tech-item">Knowledge Graphs</span>
   <span class="tech-item">Vector Embeddings</span>
   <span class="tech-item">Semantic Chunking</span>
-  <span class="tech-item">MinIO (S3)</span>
+  <span class="tech-item">Object Storage (S3)</span>
 </div>
 
 <h3 class="section-title">Challenges & Learnings</h3>
@@ -169,7 +169,7 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
 <ul class="challenges-list">
   <li>Blank node structures in RDF make direct SPARQL querying complex — required custom data parsing to extract human-readable attributes for embedding</li>
   <li>LLM-generated SPARQL needs iterative validation; single-pass generation fails on enterprise ontology complexity</li>
-  <li>Semantic chunking not always applicable to structured data — UnitDB data is already structured, requiring different embedding strategies</li>
+  <li>Semantic chunking not always applicable to structured data — product knowledge base data is already structured, requiring different embedding strategies</li>
   <li>Agent routing decisions need safeguards: a KG returning "0" could mean "no data found" vs "the actual value is zero"</li>
   <li>Language tags in RDF (@en) require filtering to avoid duplicate retrieval across locales</li>
   <li>Parallel retrieval (KG + Vector) outperforms sequential routing for most product questions</li>
@@ -185,6 +185,5 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
 |---|---|
 | **Interns** | Aditya Khadkikar, Oscar Stackenland |
 | **Supervisors** | Saranya Govindaraj, Sarbashis Das (Ericsson) |
-| **Project** | Product Information Assistant (PIA) |
-| **Team** | System Comprehension Lab, Ericsson Stockholm |
+| **Project** | Enterprise Product Intelligence |
 | **Period** | Summer 2024 |
