@@ -55,7 +55,10 @@ ninja.data = [{
             window.location.href = "/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/";
           
         },
-      },{id: "news-earned-the-gcp-professional-machine-learning-engineer-certification-and-the-gcp-genai-l400-skills-badge",
+      },{id: "news-supervising-summer-interns-building-a-multi-agent-rag-system-with-knowledge-graphs-at-ericsson-stockholm-combining-sparql-based-graph-traversal-with-vector-search-using-langgraph-see-details",
+          title: 'Supervising summer interns building a Multi-Agent RAG system with knowledge graphs at Ericsson...',
+          description: "",
+          section: "News",},{id: "news-earned-the-gcp-professional-machine-learning-engineer-certification-and-the-gcp-genai-l400-skills-badge",
           title: 'Earned the GCP Professional Machine Learning Engineer certification and the GCP GenAI L400...',
           description: "",
           section: "News",},{id: "news-earned-the-aws-certified-ai-practitioner-certification",
