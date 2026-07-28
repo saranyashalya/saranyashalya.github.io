@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-knowledge-fabric-ai-powered-technical-intelligence",
+        },{id: "post-beyond-39-it-looks-good-39-a-production-rag-evaluation-framework",
+        
+          title: "Beyond &#39;It Looks Good&#39;: A Production RAG Evaluation Framework",
+        
+        description: "A practical guide to building production-grade RAG evaluation — comparing RAGAS and Amazon Bedrock AgentCore Evaluations, with architecture patterns for offline, online, and CI/CD-integrated evaluation pipelines.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/rag-evaluation-framework/";
+          
+        },
+      },{id: "post-knowledge-fabric-ai-powered-technical-intelligence",
         
           title: "Knowledge Fabric: AI-Powered Technical Intelligence",
         
