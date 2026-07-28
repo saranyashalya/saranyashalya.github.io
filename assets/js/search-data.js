@@ -4,42 +4,42 @@ const ninja = document.querySelector('ninja-keys');
 // add the home and posts menu items
 ninja.data = [{
     id: "nav-about",
-    title: "about",
+    title: "About",
     section: "Navigation",
     handler: () => {
       window.location.href = "/";
     },
   },{id: "nav-blog",
-          title: "blog",
+          title: "Blog",
           description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/blog/";
           },
         },{id: "nav-patents-amp-publications",
-          title: "patents &amp; publications",
+          title: "Patents &amp; Publications",
           description: "Patents and selected publications.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/publications/";
           },
         },{id: "nav-projects",
-          title: "projects",
+          title: "Projects",
           description: "A timeline of work spanning Generative AI, RAG, Agentic AI, and traditional machine learning — most recent first.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/projects/";
           },
         },{id: "nav-thesis-supervision",
-          title: "thesis supervision",
+          title: "Thesis Supervision",
           description: "Master&#39;s thesis projects I have supervised or co-supervised.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/supervision/";
           },
-        },{id: "nav-cv",
-          title: "cv",
-          description: "Full curriculum vitae — experience, education, certifications, skills, and recognitions. A PDF copy is downloadable from the button above.",
+        },{id: "nav-resume",
+          title: "Resume",
+          description: "Experience, education, certifications, skills, and recognitions.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -69,6 +69,9 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "news-launched-this-site-expect-notes-on-rag-aws-bedrock-agentcore-and-agentic-ai",
           title: 'Launched this site! Expect notes on RAG, AWS Bedrock, AgentCore, and Agentic AI....',
+          description: "",
+          section: "News",},{id: "news-published-new-blog-post-knowledge-fabric-ai-powered-technical-intelligence-how-we-transform-scattered-technical-documentation-into-an-ai-queryable-intelligence-layer",
+          title: 'Published new blog post: Knowledge Fabric: AI-Powered Technical Intelligence — how we transform...',
           description: "",
           section: "News",},{
         id: 'social-cv',
