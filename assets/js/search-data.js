@@ -30,9 +30,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/projects/";
           },
-        },{id: "nav-thesis-supervision",
-          title: "Thesis Supervision",
-          description: "Master&#39;s thesis projects I have supervised or co-supervised.",
+        },{id: "nav-thesis-amp-internship-supervision",
+          title: "Thesis &amp; Internship Supervision",
+          description: "Master&#39;s thesis and internship projects I have supervised or co-supervised.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/supervision/";
@@ -53,6 +53,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/";
+          
+        },
+      },{id: "post-evaluating-genai-coding-assistants-in-enterprise-software-development",
+        
+          title: "Evaluating GenAI Coding Assistants in Enterprise Software Development",
+        
+        description: "A Master&#39;s thesis examining how developers perceive AI coding assistants (Amazon Q Developer &amp; AWS Kiro) using the SPACE framework and Task-Technology Fit theory.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/genai-coding-assistants-thesis/";
           
         },
       },{id: "news-earned-the-gcp-professional-machine-learning-engineer-certification-and-the-gcp-genai-l400-skills-badge",
