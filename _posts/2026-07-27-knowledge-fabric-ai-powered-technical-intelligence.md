@@ -157,11 +157,11 @@ featured: true
     <span class="flow-arrow">→</span>
     <div class="flow-step"><div class="step-title">Parse & Extract</div><div class="step-desc">Tables, entities, relations</div></div>
     <span class="flow-arrow">→</span>
-    <div class="flow-step"><div class="step-title">Graph + Vectors</div><div class="step-desc">NetworkX + OpenSearch</div></div>
+    <div class="flow-step"><div class="step-title">Graph + Vectors</div><div class="step-desc">Knowledge graph + vector store</div></div>
     <span class="flow-arrow">→</span>
     <div class="flow-step"><div class="step-title">Entity Registry</div><div class="step-desc">Type resolution &lt;100ms</div></div>
     <span class="flow-arrow">→</span>
-    <div class="flow-step"><div class="step-title">AI Agent</div><div class="step-desc">16 tools, one round</div></div>
+    <div class="flow-step"><div class="step-title">AI Agent</div><div class="step-desc">N tools, one round</div></div>
     <span class="flow-arrow">→</span>
     <div class="flow-step"><div class="step-title">Answer + Citations</div><div class="step-desc">Traced to source</div></div>
   </div>
