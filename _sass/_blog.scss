@@ -115,6 +115,28 @@
   }
 }
 
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--global-theme-color);
+  background: var(--global-hover-color);
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+    background: rgba(88, 166, 255, 0.12);
+    text-decoration: none;
+  }
+}
+
 .post {
   .post-header {
     margin-bottom: 2rem;

@@ -62,7 +62,19 @@ description: "A Master's thesis examining how developers perceive AI coding assi
   </div>
 </div>
 
-<h3 class="section-title">Overview</h3>
+<nav class="cv-nav">
+  <a href="#overview">Overview</a>
+  <a href="#methodology">Methodology</a>
+  <a href="#tools">Tools</a>
+  <a href="#findings">Findings</a>
+  <a href="#insight">Key Insight</a>
+  <a href="#excel">Where They Excel</a>
+  <a href="#struggle">Where They Struggle</a>
+  <a href="#implications">Implications</a>
+  <a href="#details">Details</a>
+</nav>
+
+<h3 class="section-title" id="overview">Overview</h3>
 
 This master's thesis examines how software developers perceive the productivity impact of **Generative AI coding assistants** — specifically **Amazon Q Developer** and **AWS Kiro** — in a large telecom enterprise. The study uses a **mixed-methods survey** of 160 developers, combining quantitative analysis with thematic qualitative analysis.
 
@@ -70,7 +82,7 @@ The research integrates two frameworks:
 - **SPACE Framework** — captures developer productivity across five dimensions: Satisfaction, Performance, Activity, Communication & Collaboration, and Efficiency & Flow
 - **Task–Technology Fit (TTF)** — explains *why* productivity outcomes vary: it's not about how often you use the tool, but how well it fits your tasks
 
-<h3 class="section-title">Research Methodology</h3>
+<h3 class="section-title" id="methodology">Research Methodology</h3>
 
 <div class="method-flow">
   <div class="method-step"><div class="step-title">Survey Design</div><div class="step-desc">SPACE + TTF items</div></div>
@@ -84,7 +96,7 @@ The research integrates two frameworks:
   <div class="method-step"><div class="step-title">Findings</div><div class="step-desc">SPACE × TTF insights</div></div>
 </div>
 
-<h3 class="section-title">Tools Evaluated</h3>
+<h3 class="section-title" id="tools">Tools Evaluated</h3>
 
 <div class="tools-compare">
   <div class="tool-card">
@@ -99,7 +111,7 @@ The research integrates two frameworks:
   </div>
 </div>
 
-<h3 class="section-title">Key Findings: SPACE Dimensions</h3>
+<h3 class="section-title" id="findings">Key Findings: SPACE Dimensions</h3>
 
 <div class="findings-grid">
   <div class="finding-card">
@@ -129,7 +141,7 @@ The research integrates two frameworks:
   </div>
 </div>
 
-<h3 class="section-title">Critical Insight: Task–Technology Fit Matters More Than Usage</h3>
+<h3 class="section-title" id="insight">Critical Insight: Task–Technology Fit Matters More Than Usage</h3>
 
 <div class="key-insight">
   <blockquote>"Perceived task–technology fit is positively associated with all productivity dimensions, whereas utilization alone is not a statistically significant predictor. Productivity gains depend on how well coding assistants fit developers' tasks — not on how often they are used."</blockquote>
@@ -137,7 +149,7 @@ The research integrates two frameworks:
 
 This is the study's most important finding: organizations should focus on **fit** (matching the right tool to the right task) rather than maximizing **adoption metrics** (usage frequency). A developer using an AI assistant twice a day on well-matched tasks gets more value than one using it constantly on ill-suited work.
 
-<h3 class="section-title">Where AI Assistants Excel</h3>
+<h3 class="section-title" id="excel">Where AI Assistants Excel</h3>
 
 <ul class="implications-list">
   <li>Code comprehension and explanation of unfamiliar codebases</li>
@@ -148,7 +160,7 @@ This is the study's most important finding: organizations should focus on **fit*
   <li>Reducing context-switching by answering questions in-IDE</li>
 </ul>
 
-<h3 class="section-title">Where They Struggle</h3>
+<h3 class="section-title" id="struggle">Where They Struggle</h3>
 
 <ul class="implications-list">
   <li>Limited access to enterprise-specific context (internal APIs, architecture decisions)</li>
@@ -159,7 +171,7 @@ This is the study's most important finding: organizations should focus on **fit*
   <li>Complex, cross-system tasks requiring deep domain knowledge</li>
 </ul>
 
-<h3 class="section-title">Implications for Organizations</h3>
+<h3 class="section-title" id="implications">Implications for Organizations</h3>
 
 <div class="findings-grid">
   <div class="finding-card">
@@ -180,7 +192,7 @@ This is the study's most important finding: organizations should focus on **fit*
   </div>
 </div>
 
-<h3 class="section-title">Thesis Details</h3>
+<h3 class="section-title" id="details">Thesis Details</h3>
 
 | | |
 |---|---|

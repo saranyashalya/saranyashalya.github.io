@@ -30,7 +30,7 @@ I am a **Senior Data Scientist at [Ericsson](https://www.ericsson.com)** in Stoc
 
 I specialize in **end-to-end RAG evaluation**: designing evaluation strategies that combine open-source frameworks (RAGAS), AWS AgentCore evaluation capabilities, and custom rubrics tailored to domain-specific quality criteria — ensuring RAG systems are not just functional but reliably accurate at scale.
 
-Over 14+ years I've worked across **telecom, industrial, and pharma** domains — from classical ML (anomaly detection, time-series forecasting, NLP) to today's agentic AI systems built on AWS Bedrock.
+Over 15+ years I've worked across **telecom, industrial, and pharma** domains — from classical ML (anomaly detection, time-series forecasting, NLP) to today's agentic AI systems built on AWS Bedrock.
 
 My current focus is building a [Knowledge Fabric](/blog/2026/knowledge-fabric-ai-powered-technical-intelligence/) — a multi-layer AI architecture that transforms scattered technical documentation into a queryable intelligence layer by combining knowledge graphs, vector search, entity resolution, and tool-equipped AI agents. I'm particularly excited about how **agent harnesses** (Claude Code, Kiro, AgentCore) are reshaping how teams build and ship AI software.
 
