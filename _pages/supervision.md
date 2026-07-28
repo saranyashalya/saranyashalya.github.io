@@ -46,6 +46,21 @@ nav_order: 4
     <span class="card-arrow">→</span>
   </a>
 
+  <a href="/supervision/multi-agent-rag-kg-2024/" class="supervision-card">
+    <span class="card-type">Summer Internship · 2024</span>
+    <div class="card-title">Multi-Agent RAG with Knowledge Graphs for Product Intelligence</div>
+    <div class="card-authors">Aditya Khadkikar & Oscar Stackenland · Ericsson Stockholm</div>
+    <div class="card-summary">Built a multi-agent RAG prototype combining SPARQL-based knowledge graph traversal with vector search using LangGraph. The system enables natural language queries over enterprise product documentation (UnitDB) with parallel retrieval and iterative SPARQL validation.</div>
+    <div class="card-meta">
+      <span class="tag">LangGraph</span>
+      <span class="tag">Knowledge Graphs</span>
+      <span class="tag">SPARQL</span>
+      <span class="tag">OpenSearch</span>
+      <span class="tag">Multi-Agent</span>
+    </div>
+    <span class="card-arrow">→</span>
+  </a>
+
 </div>
 
 <div class="supervision-cta">
