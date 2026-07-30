@@ -147,6 +147,8 @@ cv:
     Languages:
       - name: English
         summary: Fluent
+      - name: Hindi
+        summary: Fluent
       - name: Tamil
         summary: Native
       - name: Swedish
