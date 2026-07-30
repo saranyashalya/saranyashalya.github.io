@@ -110,6 +110,7 @@ featured: false
 <aside class="ev-sidebar">
   <div class="ev-sidebar-label">On this page</div>
   <a href="#why">Why RAG Evaluation?</a>
+  <a href="#lifecycle">Evaluation Lifecycle</a>
   <a href="#pipeline">Evaluation as a Pipeline</a>
   <a href="#metrics">Metrics Taxonomy</a>
   <a href="#approaches">Quantitative vs Qualitative</a>
@@ -149,6 +150,31 @@ featured: false
   <div class="ev-callout ev-callout-warning">
     <div class="ev-callout-head">The Real Problem</div>
     <p>RAG systems have multiple moving parts — ingestion, chunking, embedding, retrieval, reranking, prompting, and generation. If the final answer is wrong, the problem could be at any stage. Without evaluating each stage independently, debugging becomes guesswork.</p>
+  </div>
+</div>
+
+<!-- Section: Evaluation Lifecycle -->
+<div class="ev-section" id="lifecycle">
+  <h2>The Evaluation Lifecycle</h2>
+  <p>Evaluation is not a one-time activity — it's a continuous cycle that begins before the system is even deployed. The lifecycle starts with synthetic test set generation and loops back through human review at every stage.</p>
+
+  <ul class="ev-timeline">
+    <li><div class="ev-tl-step">1. Synthetic Test Set Generation</div><div class="ev-tl-desc">LLMs automatically generate evaluation questions, expected answers, and relevant contexts from your enterprise documents. This creates a representative benchmark dataset without months of manual curation. Tools like RAGAS TestsetGenerator or custom prompting pipelines produce diverse question types — factual, multi-hop, reasoning, comparison — covering the breadth of real user queries.</div></li>
+    <li><div class="ev-tl-step">2. Human Review & Curation</div><div class="ev-tl-desc">Domain experts review the synthetic test set — validating questions for relevance, correcting expected answers, removing duplicates, and adding edge cases that synthetic generation missed. This human-in-the-loop step transforms a rough synthetic set into a golden benchmark dataset that reflects real-world complexity.</div></li>
+    <li><div class="ev-tl-step">3. Run Evaluation Against the Agent</div><div class="ev-tl-desc">Execute the curated test set against the RAG system. Collect traces (question → retrieved context → generated answer) and compute metrics across retrieval and generation stages. This establishes the performance baseline.</div></li>
+    <li><div class="ev-tl-step">4. Iterate on Configuration Changes</div><div class="ev-tl-desc">Whenever the agent configuration changes — new embedding model, updated chunking strategy, prompt modification, LLM upgrade, reranker tuning — re-run the evaluation against the same golden dataset. This ensures every change is measured, not assumed to be an improvement.</div></li>
+    <li><div class="ev-tl-step">5. Compare Results Against Baseline</div><div class="ev-tl-desc">Generate per-question verdicts (PASS / IMPROVE / FAIL) by comparing candidate scores against the baseline. Use weighted metric thresholds to determine whether the change is a net positive. Identify regressions early — before they reach production.</div></li>
+    <li><div class="ev-tl-step">6. Human Review of Results & Feedback Loop</div><div class="ev-tl-desc">Stakeholders and domain experts review evaluation results — especially low-scoring questions and borderline verdicts. Their feedback feeds back into the cycle: updating the test set with new edge cases, refining expected answers, adjusting metric weights, or identifying areas where the rubric itself needs improvement.</div></li>
+  </ul>
+
+  <div class="ev-callout ev-callout-info">
+    <div class="ev-callout-head">Why Start with Synthetic Generation?</div>
+    <p>Creating evaluation datasets manually is expensive and slow — typically taking weeks for a team to produce a few hundred questions. Synthetic generation produces thousands of diverse questions in hours, covering corner cases humans wouldn't think to test. The human review step then ensures quality without the bottleneck of manual creation from scratch.</p>
+  </div>
+
+  <div class="ev-callout ev-callout-success">
+    <div class="ev-callout-head">The Feedback Loop is Critical</div>
+    <p>Step 6 is what separates mature evaluation from a one-shot benchmark. Human feedback refines the test set over time — adding questions that exposed real production failures, removing outdated questions after system changes, and continuously raising the quality bar. The golden dataset evolves with the system.</p>
   </div>
 </div>
 
