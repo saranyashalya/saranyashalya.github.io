@@ -17,7 +17,7 @@ pagination:
 ---
 
 <style>
-  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin: 24px 0; }
+  .blog-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin: 24px 0; }
   .blog-card { background: var(--global-surface-color, #161b22); border: 1px solid var(--global-divider-color, #30363d); border-radius: 12px; padding: 28px; transition: all 0.25s ease; display: block; text-decoration: none !important; position: relative; overflow: hidden; }
   .blog-card:hover { border-color: var(--global-theme-color, #58a6ff); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(88, 166, 255, 0.12); text-decoration: none !important; }
   .blog-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #58a6ff, #bc8cff); opacity: 0; transition: opacity 0.25s; }
