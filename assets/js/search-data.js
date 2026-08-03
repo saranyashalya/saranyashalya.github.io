@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-beyond-39-it-looks-good-39-a-production-rag-evaluation-framework",
+        },{id: "post-from-words-to-systems-the-evolution-of-the-agentic-stack",
+        
+          title: "From Words to Systems: The Evolution of the Agentic Stack",
+        
+        description: "How the agentic stack evolved from prompt engineering to loop engineering — four layers of control that didn&#39;t replace each other but absorbed each other.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/agentic-stack-evolution/";
+          
+        },
+      },{id: "post-beyond-39-it-looks-good-39-a-production-rag-evaluation-framework",
         
           title: "Beyond &#39;It Looks Good&#39;: A Production RAG Evaluation Framework",
         
