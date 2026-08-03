@@ -112,38 +112,58 @@ The core challenge: product information is distributed across a **knowledge grap
   <div class="flow-step"><div class="step-title">Answer</div><div class="step-desc">Structured output</div></div>
 </div>
 
-The system uses **LangGraph** to orchestrate a stateful agent graph where:
+The final system uses **LangGraph** to orchestrate a stateful agent graph where:
 1. A **Router Agent** classifies the question intent and decides which tools to invoke
 2. A **KG Query Process** generates SPARQL queries against the product knowledge graph, with iterative error correction
-3. A **Vector Search Process** retrieves relevant chunks from OpenSearch (product knowledge base embeddings)
+3. A **Vector Search Process** retrieves relevant chunks from the vector store (product knowledge base embeddings)
 4. An **Evaluator Agent** assesses whether the retrieved context is sufficient or needs re-invocation with different tools
+5. Two independent LLMs are used — a lighter model for routing decisions, a more capable model for evaluation
 
-<h3 class="section-title">Key Technical Work</h3>
+<h3 class="section-title">Approaches Explored</h3>
+
+The internship systematically explored three approaches, each building on the learnings of the previous:
 
 <div class="findings-grid">
   <div class="finding-card">
-    <h4>SPARQL Generation & Validation</h4>
-    <p>LLM-generated SPARQL queries with iterative error correction — the system feeds validation errors back to the LLM for self-repair, enabling robust graph querying without manual query writing.</p>
+    <h4>Approach 1: Knowledge Graph Chain</h4>
+    <p>Generate SPARQL queries from natural language using the LLM, retrieve triples from the KG, and generate a natural-language answer from the structured results. The SPARQL generation uses the graph schema + example queries as context for the LLM.</p>
   </div>
   <div class="finding-card">
-    <h4>product knowledge base Vector Embedding</h4>
-    <p>Extracted and embedded product attributes from RDF blank nodes into OpenSearch. Metadata-enriched documents enable filtered vector search by product model, capabilities, and attributes.</p>
+    <h4>Approach 2: Vector Search Chain</h4>
+    <p>Extract structured attributes from RDF blank nodes (product name, capability modules, attribute-value pairs), embed them as documents with metadata, and perform similarity search against user queries. Enables fuzzy matching over unstructured product information.</p>
   </div>
   <div class="finding-card">
-    <h4>Hybrid Retrieval (RunnableParallel)</h4>
-    <p>Parallel execution of knowledge graph SPARQL queries and vector similarity search, combining structured precision with semantic coverage for comprehensive answers.</p>
+    <h4>Approach 3: Multi-Agent Combination</h4>
+    <p>Combine both approaches using LangGraph — a Router Agent decides whether to use the KG chain, vector chain, or both. An Evaluator Agent assesses the answer quality and can re-invoke the other tool if the first result is insufficient.</p>
+  </div>
+</div>
+
+<h3 class="section-title">Key Technical Contributions</h3>
+
+<div class="findings-grid">
+  <div class="finding-card">
+    <h4>SPARQL Generation with Error Recovery</h4>
+    <p>LLM-generated SPARQL queries with iterative validation — error messages from failed queries are fed back to the LLM for self-repair using SPARQLWrapper. Handles prefix issues, syntax errors, and schema mismatches automatically.</p>
+  </div>
+  <div class="finding-card">
+    <h4>Structured Document Embedding</h4>
+    <p>Extracted product attributes from RDF blank nodes via SPARQL, creating documents with product name, capabilities, and attribute-value pairs. Metadata-enriched embeddings enable filtered vector search by product model.</p>
+  </div>
+  <div class="finding-card">
+    <h4>LangGraph Agent Orchestration</h4>
+    <p>State-machine based agent graph with conditional routing, tool selection, and re-invocation logic. The Router and Evaluator agents operate as independent LLMs with distinct responsibilities — moving beyond simple chain-of-thought to adaptive retrieval.</p>
   </div>
   <div class="finding-card">
     <h4>Conversational Memory</h4>
     <p>ConversationBufferMemory integration allowing follow-up questions without re-providing context — enabling natural multi-turn interactions about product specifications.</p>
   </div>
   <div class="finding-card">
-    <h4>LangGraph Agent Orchestration</h4>
-    <p>State-machine based agent graph with conditional routing, tool selection, and re-invocation logic — moving beyond simple chain-of-thought to adaptive retrieval.</p>
+    <h4>Schema-Guided Query Generation</h4>
+    <p>JSON-ified graph schema provided to the LLM — separating node types, object properties, and data properties to make ontology structure explicit and improve SPARQL generation accuracy.</p>
   </div>
   <div class="finding-card">
-    <h4>Structured Output Validation</h4>
-    <p>Agent outputs structured data formats for downstream validation and control, catching cases where the KG returns empty results that would otherwise be misinterpreted.</p>
+    <h4>Structured Output Control</h4>
+    <p>Agent outputs structured data formats for validation and control, catching edge cases where the KG returns "0" (ambiguous between "no data found" vs "actual value is zero").</p>
   </div>
 </div>
 
@@ -155,24 +175,44 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
   <span class="tech-item">OpenSearch</span>
   <span class="tech-item">SPARQL</span>
   <span class="tech-item">RDF / Turtle</span>
-  <span class="tech-item">Apache Jena Fuseki</span>
-  <span class="tech-item">Azure OpenAI</span>
+  <span class="tech-item">Triple Store</span>
+  <span class="tech-item">LLMs (GPT-3.5 / GPT-4)</span>
   <span class="tech-item">Python</span>
   <span class="tech-item">Knowledge Graphs</span>
   <span class="tech-item">Vector Embeddings</span>
-  <span class="tech-item">Semantic Chunking</span>
+  <span class="tech-item">SPARQLWrapper</span>
   <span class="tech-item">Object Storage (S3)</span>
 </div>
 
 <h3 class="section-title">Challenges & Learnings</h3>
 
+<div class="findings-grid">
+  <div class="finding-card">
+    <h4>KG Chain Limitations</h4>
+    <p>Graph schema extraction was often close to or exceeding LLM token limits, restricting the approach to smaller subgraphs. Certain information stored in unstructured text fields or labels within the KG was hard to retrieve via SPARQL — limiting the system to questions where clear structural instructions existed.</p>
+  </div>
+  <div class="finding-card">
+    <h4>Vector Search Limitations</h4>
+    <p>Surface-level answers worked well, but the vector search prioritized wrong documents and favored certain versions over others. The system struggled to recognize when information from multiple documents was needed, and was sensitive to how the user phrased the question.</p>
+  </div>
+  <div class="finding-card">
+    <h4>Structured vs Unstructured Data</h4>
+    <p>Semantic chunking was not fully applicable to already-structured data. Required different embedding strategies — extracting product name, capabilities, and attribute-value pairs as metadata rather than treating structured records as free text.</p>
+  </div>
+  <div class="finding-card">
+    <h4>Agent Decision Boundaries</h4>
+    <p>When the KG returned "0", the agent assumed the answer was determined and didn't re-prompt the vector search — confusing "no data found" with "the actual value is zero". Required explicit state management with structured output controls.</p>
+  </div>
+</div>
+
+<h3 class="section-title">Future Directions</h3>
+
 <ul class="challenges-list">
-  <li>Blank node structures in RDF make direct SPARQL querying complex — required custom data parsing to extract human-readable attributes for embedding</li>
-  <li>LLM-generated SPARQL needs iterative validation; single-pass generation fails on enterprise ontology complexity</li>
-  <li>Semantic chunking not always applicable to structured data — product knowledge base data is already structured, requiring different embedding strategies</li>
-  <li>Agent routing decisions need safeguards: a KG returning "0" could mean "no data found" vs "the actual value is zero"</li>
-  <li>Language tags in RDF (@en) require filtering to avoid duplicate retrieval across locales</li>
-  <li>Parallel retrieval (KG + Vector) outperforms sequential routing for most product questions</li>
+  <li>Broader QA testing across diverse scenarios to validate expected answers</li>
+  <li>Restructure SPARQL generation to be less dependent on hand-crafted examples</li>
+  <li>Improve embedded document structure — exclude non-semantic metadata (product IDs) to improve search relevance</li>
+  <li>Better structured output with controllable state attributes for agent responses</li>
+  <li>Explore hybrid retrieval strategies where both KG and vector tools always execute in parallel rather than sequential routing</li>
 </ul>
 
 <div class="key-insight">
@@ -183,7 +223,8 @@ The system uses **LangGraph** to orchestrate a stateful agent graph where:
 
 | | |
 |---|---|
-| **Interns** | Aditya Khadkikar, Oscar Stackenland |
+| **Interns** | Aditya Khadkikar (Uppsala University), Oscar Stackenland (Lund University) |
 | **Supervisors** | Saranya Govindaraj, Sarbashis Das (Ericsson) |
+| **Mentors** | Adria Cruz, Alexander Häll Lanerfeldt |
 | **Project** | Product Information Assistant (PIA) |
 | **Period** | Summer 2024 |
