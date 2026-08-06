@@ -44,7 +44,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-from-words-to-systems-the-evolution-of-the-agentic-stack",
+        },{id: "post-knowledge-graph-augmented-rag-how-lightrag-bridges-flat-retrieval-and-structured-reasoning",
+        
+          title: "Knowledge-Graph-Augmented RAG: How LightRAG Bridges Flat Retrieval and Structured Reasoning",
+        
+        description: "How LightRAG augments standard vector RAG with an automatically constructed knowledge graph — enabling multi-hop reasoning, entity-centric lookups, and dual-level retrieval that pure chunk similarity cannot achieve.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/lightrag-knowledge-graph-augmented-retrieval/";
+          
+        },
+      },{id: "post-enterprise-identity-amp-access-flow-authentication-amp-authorization-with-microsoft-entra-id",
+        
+          title: "Enterprise Identity &amp; Access Flow: Authentication &amp; Authorization with Microsoft Entra ID",
+        
+        description: "A comprehensive guide to enterprise identity flows — how Microsoft Entra ID integrates with AWS and applications using SAML, OIDC, and OAuth 2.0 for single sign-on, delegated access, and service-to-service authorization.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/enterprise-identity-access-flow/";
+          
+        },
+      },{id: "post-from-words-to-systems-the-evolution-of-the-agentic-stack",
         
           title: "From Words to Systems: The Evolution of the Agentic Stack",
         
