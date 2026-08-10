@@ -95,6 +95,10 @@ cv:
           - "**University 3rd rank** in Computer Science department out of 200+ colleges."
 
     Certificates:
+      - name: Anthropic Claude Code Architect - Foundation
+        date: 2026
+        issuer: Anthropic
+        icon: fa-solid fa-robot
       - name: AWS Certified AI Practitioner
         date: 2025
         issuer: Amazon Web Services
