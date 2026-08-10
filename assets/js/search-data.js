@@ -120,6 +120,9 @@ ninja.data = [{
           section: "News",},{id: "news-published-new-blog-post-knowledge-fabric-ai-powered-technical-intelligence-how-we-transform-scattered-technical-documentation-into-an-ai-queryable-intelligence-layer",
           title: 'Published new blog post: Knowledge Fabric: AI-Powered Technical Intelligence — how we transform...',
           description: "",
+          section: "News",},{id: "news-earned-the-anthropic-claude-code-architect-foundation-certification",
+          title: 'Earned the Anthropic Claude Code Architect - Foundation certification.',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
