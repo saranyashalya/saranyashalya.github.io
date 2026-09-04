@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-knowledge-graph-augmented-rag-how-lightrag-bridges-flat-retrieval-and-structured-reasoning",
+        },{id: "post-the-complete-ops-field-guide-devops-gitops-mlops-llmops-and-beyond",
+        
+          title: "The Complete -Ops Field Guide: DevOps, GitOps, MLOps, LLMOps, and Beyond",
+        
+        description: "A layered mental model for every -ops discipline you&#39;ll encounter in AI/ML and cloud engineering — what each owns, how they differ, and where they intersect in production agentic RAG systems.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ops-field-guide/";
+          
+        },
+      },{id: "post-knowledge-graph-augmented-rag-how-lightrag-bridges-flat-retrieval-and-structured-reasoning",
         
           title: "Knowledge-Graph-Augmented RAG: How LightRAG Bridges Flat Retrieval and Structured Reasoning",
         
