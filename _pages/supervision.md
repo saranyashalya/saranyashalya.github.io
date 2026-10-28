@@ -34,7 +34,7 @@ nav_order: 4
   <a href="/supervision/genai-coding-assistants-thesis/" class="supervision-card">
     <span class="card-type">Master's Thesis · Spring 2026</span>
     <div class="card-title">Evaluating Generative AI Coding Assistants in Enterprise Software Development</div>
-    <div class="card-authors">Louise Bergman & Reena Thomas · Linnaeus University</div>
+    <div class="card-authors">Supervised by Saranya · Linnaeus University</div>
     <div class="card-summary">Mixed-methods study of 160 enterprise developers evaluating Amazon Q Developer and AWS Kiro using the SPACE framework and Task–Technology Fit theory. Key finding: task-technology fit — not usage frequency — predicts productivity gains.</div>
     <div class="card-meta">
       <span class="tag">SPACE Framework</span>
@@ -49,7 +49,7 @@ nav_order: 4
   <a href="/supervision/multi-agent-rag-kg-2024/" class="supervision-card">
     <span class="card-type">Summer Internship · 2024</span>
     <div class="card-title">Multi-Agent RAG with Knowledge Graphs for Product Intelligence</div>
-    <div class="card-authors">Aditya Khadkikar & Oscar Stackenland · Ericsson Stockholm</div>
+    <div class="card-authors">Supervised by Saranya · Ericsson Stockholm</div>
     <div class="card-summary">Built a multi-agent RAG prototype combining SPARQL-based knowledge graph traversal with vector search using LangGraph. The system enables natural language queries over enterprise product documentation (UnitDB) with parallel retrieval and iterative SPARQL validation.</div>
     <div class="card-meta">
       <span class="tag">LangGraph</span>

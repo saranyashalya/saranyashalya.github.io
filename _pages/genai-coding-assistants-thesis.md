@@ -196,9 +196,9 @@ This is the study's most important finding: organizations should focus on **fit*
 
 | | |
 |---|---|
-| **Authors** | Louise Bergman, Reena Thomas |
-| **Academic Supervisor** | Jan Aidemark (Linnaeus University) |
-| **Industry Supervisors** | Saranya Govindaraj, Magnus Standar (Ericsson) |
+| **Authors** | 2 students |
+| **Academic Supervisor** | 1 academic supervisor (Linnaeus University) |
+| **Industry Supervisors** | Saranya + 1 (Ericsson) |
 | **University** | Linnaeus University, Department of Informatics |
 | **Level** | Master's (Graduate), Course 5IK50E |
 | **Term** | Spring 2026 |

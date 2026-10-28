@@ -223,8 +223,8 @@ The internship systematically explored three approaches, each building on the le
 
 | | |
 |---|---|
-| **Interns** | Aditya Khadkikar (Uppsala University), Oscar Stackenland (Lund University) |
-| **Supervisors** | Saranya Govindaraj, Sarbashis Das (Ericsson) |
-| **Mentors** | Adria Cruz, Alexander Häll Lanerfeldt |
+| **Interns** | 2 students |
+| **Supervisors** | Saranya + 1 |
+| **Mentors** | 2 mentors |
 | **Project** | Product Information Assistant (PIA) |
 | **Period** | Summer 2024 |
