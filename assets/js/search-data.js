@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-the-complete-ops-field-guide-devops-gitops-mlops-llmops-and-beyond",
+        },{id: "post-the-llm-landscape-architectures-families-and-how-to-choose",
+        
+          title: "The LLM Landscape: Architectures, Families, and How to Choose",
+        
+        description: "A field map of today&#39;s large language model ecosystem — the architecture patterns underneath the hype, the major model families from OpenAI to Qwen, and a practical lens for picking the right one.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/llm-landscape-architectures-model-families/";
+          
+        },
+      },{id: "post-the-complete-ops-field-guide-devops-gitops-mlops-llmops-and-beyond",
         
           title: "The Complete -Ops Field Guide: DevOps, GitOps, MLOps, LLMOps, and Beyond",
         
