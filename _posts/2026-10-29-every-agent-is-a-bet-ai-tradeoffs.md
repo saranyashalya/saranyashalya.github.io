@@ -1,0 +1,580 @@
+---
+layout: post
+title: "Every Agent Is a Bet: The Tradeoffs That Decide Whether It Ships"
+date: 2026-10-29
+description: "Agentic systems fail by being plausibly wrong, expensively, and repeatedly. This is a field guide to the tradeoffs that actually decide deployment — autonomy, multi-agent coordination, the compute bill, control, and evaluation — with the 2026 evidence for each, and a reusable decision ledger."
+tags: [agentic-ai, tradeoffs, architecture, evaluation, security]
+categories: [genai]
+featured: false
+---
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bet-bg: #0d1117; --bet-card: #161b22; --bet-card2: #1c2333; --bet-border: #30363d;
+    --bet-text: #e6edf3; --bet-text2: #8b949e; --bet-muted: #6e7681;
+    --bet-blue: #58a6ff; --bet-purple: #a371f7; --bet-green: #3fb950;
+    --bet-orange: #f0883e; --bet-cyan: #79c0ff; --bet-amber: #ffa657; --bet-red: #f85149;
+  }
+  .bet-wrap { font-family: 'Space Grotesk', 'Inter', sans-serif; color: var(--bet-text); line-height: 1.7; max-width: 1100px; margin: 0 auto; }
+  .bet-wrap p { color: var(--bet-text); margin: 0 0 1rem; line-height: 1.75; }
+
+  /* Layout */
+  .bet-layout { display: grid; grid-template-columns: 210px 1fr; gap: 2.5rem; }
+  .bet-sidebar { position: sticky; top: 5rem; align-self: start; height: calc(100vh - 6rem); overflow-y: auto; }
+  .bet-sidebar-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bet-muted); margin-bottom: 0.75rem; }
+  .bet-sidebar a { display: block; padding: 0.35rem 0.75rem; border-left: 2px solid transparent; color: var(--bet-text2); text-decoration: none; font-size: 0.78rem; font-weight: 500; transition: all 0.2s; border-radius: 0 4px 4px 0; }
+  .bet-sidebar a:hover { color: var(--bet-blue); border-left-color: var(--bet-blue); background: rgba(88,166,255,0.05); text-decoration: none; }
+  .bet-sidebar a.active { color: var(--bet-blue); border-left-color: var(--bet-blue); font-weight: 600; background: rgba(88,166,255,0.08); }
+  @media (max-width: 1000px) { .bet-layout { grid-template-columns: 1fr; } .bet-sidebar { display: none; } }
+
+  /* Hero */
+  .bet-hero { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--bet-border); }
+  .bet-hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .bet-tag { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .bet-tag-blue { background: rgba(88,166,255,0.15); color: var(--bet-blue); border: 1px solid rgba(88,166,255,0.3); }
+  .bet-tag-purple { background: rgba(163,113,247,0.15); color: var(--bet-purple); border: 1px solid rgba(163,113,247,0.3); }
+  .bet-tag-green { background: rgba(63,185,80,0.15); color: var(--bet-green); border: 1px solid rgba(63,185,80,0.3); }
+  .bet-tag-orange { background: rgba(240,136,62,0.15); color: var(--bet-orange); border: 1px solid rgba(240,136,62,0.3); }
+  .bet-hero h1 { font-size: clamp(1.9rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; color: var(--bet-text); margin: 0 0 1rem; letter-spacing: -0.02em; }
+  .bet-hero-subtitle { font-size: 1.1rem; color: var(--bet-text); line-height: 1.6; margin: 0 0 1.5rem; max-width: 800px; opacity: 0.9; }
+
+  /* Sections */
+  .bet-section { margin-bottom: 3.5rem; scroll-margin-top: 5rem; }
+  .bet-section h2 { font-size: 1.5rem; font-weight: 700; color: var(--bet-text); margin: 0 0 1.25rem; letter-spacing: -0.015em; display: flex; align-items: center; gap: 0.6rem; }
+  .bet-section h2::before { content: ""; display: inline-block; width: 3px; height: 1.3em; background: linear-gradient(180deg, var(--bet-blue), var(--bet-purple)); border-radius: 2px; }
+  .bet-section h3 { font-size: 1.1rem; font-weight: 600; color: var(--bet-text); margin: 2rem 0 0.75rem; }
+
+  /* Callouts */
+  .bet-callout { border-left: 3px solid; padding: 1rem 1.25rem; border-radius: 0 0.5rem 0.5rem 0; margin: 1.5rem 0; }
+  .bet-callout-info { border-color: var(--bet-blue); background: rgba(88,166,255,0.07); }
+  .bet-callout-success { border-color: var(--bet-green); background: rgba(63,185,80,0.07); }
+  .bet-callout-warning { border-color: var(--bet-amber); background: rgba(255,166,87,0.07); }
+  .bet-callout-danger { border-color: var(--bet-red); background: rgba(248,81,73,0.07); }
+  .bet-callout-spec { border-color: var(--bet-purple); background: rgba(163,113,247,0.07); }
+  .bet-callout-head { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem; }
+  .bet-callout-info .bet-callout-head { color: var(--bet-blue); }
+  .bet-callout-success .bet-callout-head { color: var(--bet-green); }
+  .bet-callout-warning .bet-callout-head { color: var(--bet-amber); }
+  .bet-callout-danger .bet-callout-head { color: var(--bet-red); }
+  .bet-callout-spec .bet-callout-head { color: var(--bet-purple); }
+  .bet-callout p { margin: 0; font-size: 0.88rem; color: var(--bet-text); opacity: 0.9; }
+
+  /* Cards */
+  .bet-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
+  .bet-inf { background: var(--bet-card); border: 1px solid var(--bet-border); border-radius: 0.875rem; padding: 1.25rem 1.5rem; border-top: 3px solid; }
+  .bet-inf-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .bet-inf-title { font-size: 0.95rem; font-weight: 600; color: var(--bet-text); margin-bottom: 0.5rem; }
+  .bet-inf-body { font-size: 0.83rem; color: var(--bet-text); line-height: 1.6; opacity: 0.85; }
+
+  /* Stat strip */
+  .bet-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .bet-stat { background: var(--bet-card); border: 1px solid var(--bet-border); border-radius: 0.875rem; padding: 1.25rem; text-align: center; }
+  .bet-stat .num { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; }
+  .bet-stat .lbl { font-size: 0.72rem; color: var(--bet-text2); margin-top: 0.3rem; line-height: 1.4; }
+
+  /* Quote */
+  .bet-quote { background: linear-gradient(135deg, var(--bet-card), var(--bet-card2)); border: 1px solid var(--bet-border); border-radius: 0.875rem; padding: 1.75rem; margin: 2rem 0; }
+  .bet-quote blockquote { font-size: 1.05em; font-style: italic; color: var(--bet-text); margin: 0 0 0.5rem; line-height: 1.5; border: none; padding: 0; background: none; }
+  .bet-quote .attr { color: var(--bet-muted); font-size: 0.78rem; font-style: normal; }
+
+  /* Table */
+  .bet-table-wrap { overflow-x: auto; border-radius: 0.875rem; border: 1px solid var(--bet-border); margin: 1.5rem 0; }
+  .bet-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .bet-table thead tr { background: var(--bet-card2); }
+  .bet-table th { padding: 0.75rem 0.75rem; text-align: left; font-weight: 600; font-size: 0.68rem; color: var(--bet-text2); letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--bet-border); }
+  .bet-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--bet-border); color: var(--bet-text); opacity: 0.9; vertical-align: top; }
+  .bet-table tbody tr:last-child td { border-bottom: none; }
+  .bet-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Spectrum / rungs */
+  .bet-spectrum { background: var(--bet-card); border: 1px solid var(--bet-border); border-radius: 0.875rem; padding: 1.5rem; margin: 2rem 0; }
+  .bet-spectrum-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bet-muted); margin-bottom: 1rem; text-align: center; }
+  .bet-rungs { display: flex; flex-direction: column; gap: 0.4rem; }
+  .bet-rung { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.9rem; border: 1px solid var(--bet-border); border-radius: 0.6rem; background: var(--bet-bg); }
+  .bet-rung .n { font-size: 0.72rem; font-weight: 700; width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .bet-rung .name { font-size: 0.85rem; font-weight: 600; }
+  .bet-rung .desc { font-size: 0.72rem; color: var(--bet-text2); margin-left: auto; text-align: right; }
+
+  /* Interactive decision explorer */
+  .bet-dx { margin: 2rem 0; }
+  .bet-dx-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .bet-dx-tab { cursor: pointer; padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--bet-border); background: var(--bet-card); color: var(--bet-text2); transition: all 0.2s; }
+  .bet-dx-tab:hover { border-color: var(--bet-blue); color: var(--bet-blue); }
+  .bet-dx-tab.active { background: rgba(88,166,255,0.12); border-color: var(--bet-blue); color: var(--bet-blue); }
+  .bet-dx-detail { background: var(--bet-card); border: 1px solid var(--bet-border); border-radius: 0.875rem; padding: 1.5rem; transition: all 0.3s; }
+  .bet-dx-detail h4 { font-size: 1.05rem; font-weight: 700; color: var(--bet-text); margin: 0 0 0.75rem; }
+  .bet-dx-row { display: grid; grid-template-columns: 90px 1fr; gap: 0.5rem 1rem; font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .bet-dx-row .k { color: var(--bet-text2); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.1rem; }
+  .bet-dx-row .v { color: var(--bet-text); opacity: 0.92; }
+  .bet-dx-row .v.default { color: var(--bet-green); }
+  .bet-dx-row .v.flip { color: var(--bet-amber); }
+  .bet-dx-row .v.fail { color: var(--bet-red); }
+
+  @media (max-width: 768px) { .bet-card-grid { grid-template-columns: 1fr; } .bet-rung .desc { display: none; } .bet-dx-row { grid-template-columns: 1fr; gap: 0.1rem 0; margin-bottom: 0.9rem; } }
+</style>
+
+<div class="bet-wrap">
+
+<!-- Hero -->
+<div class="bet-hero">
+  <div class="bet-hero-tags">
+    <span class="bet-tag bet-tag-blue">Agentic AI</span>
+    <span class="bet-tag bet-tag-purple">Tradeoffs</span>
+    <span class="bet-tag bet-tag-green">Evaluation</span>
+    <span class="bet-tag bet-tag-orange">Control</span>
+  </div>
+  <h1>Every Agent Is a Bet</h1>
+  <p class="bet-hero-subtitle">Agentic systems fail in a distinctive way: not by being wrong, but by being <em>plausibly</em> wrong — expensively, and repeatedly. The useful design question is never "which framework?" It is "how much autonomy does this task actually require, and what am I willing to pay in cost, latency, and control to get it?" This is a field guide to those tradeoffs, the 2026 evidence for each, and a reusable ledger for deciding.</p>
+</div>
+
+<!-- Layout -->
+<div class="bet-layout">
+<aside class="bet-sidebar">
+  <div class="bet-sidebar-label">On this page</div>
+  <a href="#failure">A Failure Story</a>
+  <a href="#autonomy">Price the Autonomy</a>
+  <a href="#dimensions">Tradeoffs to Weigh First</a>
+  <a href="#classic">Classic ML Tradeoffs</a>
+  <a href="#training">Training &amp; Fine-Tuning</a>
+  <a href="#multiagent">The Multi-Agent Question</a>
+  <a href="#compute">The Compute Bill</a>
+  <a href="#control">Control</a>
+  <a href="#evaluation">Evaluation</a>
+  <a href="#explorer">Decision Explorer</a>
+  <a href="#ledger">The Tradeoff Ledger</a>
+  <a href="#thesis">The Thesis</a>
+</aside>
+<div class="bet-content">
+
+<!-- Section: Failure Story -->
+<div class="bet-section" id="failure">
+  <h2>An Agent That Was Confidently Wrong 200 Times</h2>
+  <p>Picture a support agent wired to resolve refund tickets end to end. In testing it looked brilliant: it read the ticket, checked the order, issued the refund, and wrote a warm closing note. In production it did the same thing — two hundred times — to a batch of tickets where the orders had already been refunded by a nightly job it never checked. Every single action was individually plausible. The note was polite. The refund was processed. And the company double-paid two hundred customers before anyone noticed, because nothing in the loop was watching the <em>system-level</em> outcome.</p>
+  <p>That is the characteristic shape of agentic failure. A deterministic bug throws an exception; a stochastic agent produces a confident, well-formatted mistake and then repeats it at machine speed. The rest of this post is about the decisions that prevent that — each of which is a purchase of flexibility paid for in reliability, money, or control.</p>
+
+  <div class="bet-callout bet-callout-info">
+    <div class="bet-callout-head">The Governing Principle</div>
+    <p>Anthropic's guidance is blunt: start with the simplest thing that works, which may mean no agent at all. Agentic systems trade latency and cost for task performance — so you should only buy that trade when the task genuinely needs it.</p>
+  </div>
+</div>
+
+<!-- Section: Autonomy -->
+<div class="bet-section" id="autonomy">
+  <h2>First, Price the Autonomy</h2>
+  <p>The single most consequential decision is where you sit on the workflow-to-agent spectrum, and the distinction is structural, not stylistic. A <strong>workflow</strong> orchestrates LLM calls and tools through predefined code paths; an <strong>agent</strong> lets the model direct its own process and tool use, deciding how to accomplish the task. Predefined paths are debuggable, cheap, and repeatable. Model-directed paths handle tasks whose step count you cannot predict — at the price of compounding errors and unpredictable spend.</p>
+
+  <div class="bet-spectrum">
+    <div class="bet-spectrum-title">The Autonomy Ladder — climb only as high as the task demands</div>
+    <div class="bet-rungs">
+      <div class="bet-rung"><span class="n" style="background:rgba(63,185,80,0.2);color:var(--bet-green);">1</span><span class="name">Single LLM call + retrieval</span><span class="desc">No control flow · fails on bad prompt/retrieval · one-shot tasks</span></div>
+      <div class="bet-rung"><span class="n" style="background:rgba(121,192,255,0.2);color:var(--bet-cyan);">2</span><span class="name">Prompt chain</span><span class="desc">Fixed sequence · brittle to input variety · known, ordered steps</span></div>
+      <div class="bet-rung"><span class="n" style="background:rgba(88,166,255,0.2);color:var(--bet-blue);">3</span><span class="name">Router / dispatcher</span><span class="desc">Branch on classification · fails on misclassification · distinct intents</span></div>
+      <div class="bet-rung"><span class="n" style="background:rgba(255,166,87,0.2);color:var(--bet-amber);">4</span><span class="name">Orchestrator–worker</span><span class="desc">Fixed topology, dynamic content · coordination overhead · parallel subtasks</span></div>
+      <div class="bet-rung"><span class="n" style="background:rgba(248,81,73,0.2);color:var(--bet-red);">5</span><span class="name">Autonomous agent</span><span class="desc">Model decides every step · loops, drift, cost blowups · step count unknowable</span></div>
+    </div>
+  </div>
+
+  <p>The failure mode people underrate is over-engineering at rung five when rung one would do. For most applications, a single optimized call with retrieval and good in-context examples beats a graph of agents. The spectrum is a cost gradient: each rung up buys adaptability and pays in debuggability, predictable spend, and the ability to reason about what the system will do before it does it.</p>
+</div>
+
+<!-- Section: Dimensions -->
+<div class="bet-section" id="dimensions">
+  <h2>The Tradeoffs to Weigh Before You Design</h2>
+  <p>Before writing a line of orchestration code, an agentic system design is really a set of answered questions. Each dimension below is a tension you resolve deliberately — or resolve by accident and pay for later. Treat them as the pre-flight checklist for a design review.</p>
+
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-label" style="color: var(--bet-blue);">Dimension 1</div>
+      <div class="bet-inf-title">Autonomy vs. Control</div>
+      <div class="bet-inf-body">How much should the model decide for itself? More autonomy handles unpredictable tasks; more control gives you debuggability and guarantees. The core tension the rest of the system inherits.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-label" style="color: var(--bet-purple);">Dimension 2</div>
+      <div class="bet-inf-title">Accuracy vs. Cost vs. Latency</div>
+      <div class="bet-inf-body">The runtime triangle. You can optimize two at the expense of the third — so decide which quantity the task actually permits you to sacrifice before choosing models and loop depth.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-label" style="color: var(--bet-green);">Dimension 3</div>
+      <div class="bet-inf-title">Generality vs. Reliability</div>
+      <div class="bet-inf-body">A broad, do-anything agent impresses in a demo and drifts in production. A narrow, well-scoped agent is boring and dependable. Scope is the single biggest predictor of whether it ships.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-orange);">
+      <div class="bet-inf-label" style="color: var(--bet-orange);">Dimension 4</div>
+      <div class="bet-inf-title">Capability vs. Safety / Attack Surface</div>
+      <div class="bet-inf-body">Every tool, memory store, and external data source the agent can touch is also a way in. More capability means more blast radius when something is injected or goes wrong.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-amber);">
+      <div class="bet-inf-label" style="color: var(--bet-amber);">Dimension 5</div>
+      <div class="bet-inf-title">Statelessness vs. Memory</div>
+      <div class="bet-inf-body">Memory makes agents feel coherent across turns but introduces poisoning risk and context rot. Decide what is remembered, for how long, scoped to whom — and whether it is reversible.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-cyan);">
+      <div class="bet-inf-label" style="color: var(--bet-cyan);">Dimension 6</div>
+      <div class="bet-inf-title">Speed-to-build vs. Observability</div>
+      <div class="bet-inf-body">The fastest system to stand up is the hardest to debug. Tracing, cost metering, and variance measurement feel like overhead on day one and become the only reason you can trust the thing on day thirty.</div>
+    </div>
+  </div>
+
+  <div class="bet-callout bet-callout-info">
+    <div class="bet-callout-head">How to Use These</div>
+    <p>For each dimension, write down the default you are choosing and the specific condition that would make you flip it. A design review that cannot articulate those defaults has not made decisions — it has deferred them to runtime, where they resurface as incidents. The rest of this post is the evidence behind each default, and the <a href="#ledger">ledger</a> at the end is the one-page version.</p>
+  </div>
+</div>
+
+<!-- Section: Classic ML tradeoffs -->
+<div class="bet-section" id="classic">
+  <h2>The Classic ML Tradeoffs That Still Apply</h2>
+  <p>Agentic systems are new; the tensions underneath them are not. Every agent is still built on models that obey the oldest tradeoffs in machine learning, and ignoring them produces failures that look like "the agent is dumb" but are really "the component model is mis-tuned." These are the foundational ones worth keeping in view.</p>
+
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-label" style="color: var(--bet-purple);">Generalization</div>
+      <div class="bet-inf-title">Bias vs. Variance</div>
+      <div class="bet-inf-body">High bias underfits — the model is too simple to capture the pattern. High variance overfits — it memorizes noise and fails on new inputs. In agents this surfaces as a prompt or fine-tune that is either too rigid to handle variety or too brittle, latching onto quirks of the examples. The goal is the sweet spot that generalizes.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-label" style="color: var(--bet-blue);">Classification</div>
+      <div class="bet-inf-title">Precision vs. Recall</div>
+      <div class="bet-inf-body">Tune the threshold toward precision and you miss real cases (false negatives); toward recall and you flood on false positives. A router or guardrail classifier lives or dies here — a spam/abuse filter wants recall, an auto-approve gate wants precision. There is no free threshold.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-label" style="color: var(--bet-green);">Decision-making</div>
+      <div class="bet-inf-title">Exploration vs. Exploitation</div>
+      <div class="bet-inf-body">Exploit what already works and you miss better options; explore too much and you waste budget on dead ends. It governs retrieval diversity, tool selection, and any agent that tries alternative strategies before committing — the same dilemma as a bandit or an RL policy.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-orange);">
+      <div class="bet-inf-label" style="color: var(--bet-orange);">Transparency</div>
+      <div class="bet-inf-title">Interpretability vs. Performance</div>
+      <div class="bet-inf-body">Simpler, explainable components are easier to debug, audit, and trust; larger, opaquer ones often score higher. In regulated or high-stakes settings, an explainable 92% can beat an unexplainable 95% — because you can defend the first one when it is challenged.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-amber);">
+      <div class="bet-inf-label" style="color: var(--bet-amber);">Data</div>
+      <div class="bet-inf-title">Quantity vs. Quality</div>
+      <div class="bet-inf-body">More training or in-context data helps only until noise dominates. A smaller, clean, well-labeled set frequently beats a larger messy one — the same lesson Chinchilla taught at scale and that curated few-shot examples teach in a prompt.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-cyan);">
+      <div class="bet-inf-label" style="color: var(--bet-cyan);">Serving</div>
+      <div class="bet-inf-title">Throughput vs. Latency</div>
+      <div class="bet-inf-body">Batching requests maximizes tokens-per-second across a fleet but makes any single user wait; serving one request at a time minimizes latency but wastes the GPU. Every inference layer underneath an agent is tuned somewhere on this curve.</div>
+    </div>
+  </div>
+
+  <div class="bet-callout bet-callout-warning">
+    <div class="bet-callout-head">Why This Matters for Agents</div>
+    <p>An agent is a loop wrapped around model calls, and the loop cannot out-engineer a mis-tuned model. An overfit classifier mis-routes; a low-recall guardrail lets injections through; a pure-exploitation policy never discovers the better tool. When an agentic system misbehaves, check the classic tradeoffs in its components before blaming the orchestration.</p>
+  </div>
+</div>
+
+<!-- Section: Training & fine-tuning -->
+<div class="bet-section" id="training">
+  <h2>Tradeoffs in Training and Fine-Tuning</h2>
+  <p>Before a model ever enters an agent loop, someone decided how to build or adapt it — and those decisions carry their own tensions. This is where the question "should we even fine-tune?" gets answered, usually wrongly in both directions: teams fine-tune when a prompt would do, and prompt when only a fine-tune will hold.</p>
+
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-label" style="color: var(--bet-blue);">Adaptation method</div>
+      <div class="bet-inf-title">Fine-Tune vs. RAG vs. Prompt</div>
+      <div class="bet-inf-body">Prompting is instant and free but limited by context. RAG injects fresh, auditable knowledge without touching weights. Fine-tuning bakes in behavior and style but is expensive, stale the moment data changes, and hard to audit. Rule of thumb: prompt for behavior, retrieve for knowledge, fine-tune only for a durable skill or format the other two cannot hold.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-label" style="color: var(--bet-purple);">Fine-tuning cost</div>
+      <div class="bet-inf-title">Full Fine-Tune vs. PEFT (LoRA)</div>
+      <div class="bet-inf-body">Full fine-tuning updates every weight — maximum adaptation, maximum cost, and a fresh multi-gigabyte checkpoint per task. Parameter-efficient methods (LoRA, adapters) train a tiny fraction of parameters, swap in as small modules, and cost a fraction of the memory — at a usually-small quality gap. PEFT is the default; full fine-tune is the exception you justify.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-label" style="color: var(--bet-green);">Pretraining budget</div>
+      <div class="bet-inf-title">Parameters vs. Data (Chinchilla)</div>
+      <div class="bet-inf-body">For a fixed compute budget, you can spend on a bigger model or more training tokens — not both. Chinchilla showed most models were badly undertrained; ~20 tokens per parameter is closer to optimal. Over-sizing the model and starving it of data wastes the whole budget.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-orange);">
+      <div class="bet-inf-label" style="color: var(--bet-orange);">Alignment</div>
+      <div class="bet-inf-title">SFT vs. RLHF / DPO</div>
+      <div class="bet-inf-body">Supervised fine-tuning imitates demonstrations — cheap, stable, but capped by the quality of the examples. Preference methods (RLHF, DPO) optimize toward what humans prefer, reaching behaviors no single demonstration shows, at the cost of a reward model, instability, and reward hacking. More alignment power, more ways to go wrong.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-amber);">
+      <div class="bet-inf-label" style="color: var(--bet-amber);">Specialization</div>
+      <div class="bet-inf-title">Generalist vs. Specialist (Forgetting)</div>
+      <div class="bet-inf-body">Fine-tuning hard on one domain sharpens it and quietly erodes everything else — catastrophic forgetting. A specialist wins on its niche and regresses on general tasks the agent still needs. Mixing in general data or using adapters preserves breadth, trading peak specialization for stability.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-cyan);">
+      <div class="bet-inf-label" style="color: var(--bet-cyan);">Compression</div>
+      <div class="bet-inf-title">Quantization / Distillation: Size vs. Fidelity</div>
+      <div class="bet-inf-body">Quantizing to 4-bit or distilling into a smaller student slashes memory and latency and lets a model fit on one GPU — but each step risks accuracy, especially on reasoning and long-tail cases. The win is deployment reach; the bill is paid in subtle quality loss you must measure, not assume.</div>
+    </div>
+  </div>
+
+  <div class="bet-callout bet-callout-spec">
+    <div class="bet-callout-head">The Meta-Tradeoff: Build vs. Buy</div>
+    <p>Underneath all of these sits one decision — adapt a model yourself or call a frontier API. Training and fine-tuning buy control, privacy, and a model shaped to your data; they cost GPUs, MLOps, data pipelines, and the ongoing burden of keeping the thing current. For most teams the compute-optimal move in 2026 is to prompt and retrieve first, fine-tune a small open model only when a measured gap justifies it, and reserve full training for when the model <em>is</em> the product.</p>
+  </div>
+</div>
+
+<!-- Section: Multi-agent -->
+<div class="bet-section" id="multiagent">
+  <h2>The Multi-Agent Question Has an Answer Now</h2>
+  <p>This is the most contested tradeoff in the field, and 2026 finally produced numbers rather than vibes.</p>
+
+  <div class="bet-stats">
+    <div class="bet-stat"><div class="num" style="color:var(--bet-green);">+80.9%</div><div class="lbl">Multi-agent gain on <strong>parallelizable</strong> work</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-red);">−39–70%</div><div class="lbl">Multi-agent loss on <strong>sequential</strong> tasks</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-amber);">~45%</div><div class="lbl">Single-agent baseline above which adding agents rarely helps</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-purple);">~80%</div><div class="lbl">Of benchmark variance explained by <strong>token spend alone</strong></div></div>
+  </div>
+
+  <p>Google's controlled study of 180 agent configurations found multi-agent coordination improved performance by <strong>80.9%</strong> on parallelizable work — like decomposing a financial analysis into revenue, cost, and market threads — and <em>degraded</em> it by <strong>39–70%</strong> on strictly sequential tasks like planning. They also identified a tool-coordination tax: as an agent's toolset grows past roughly sixteen tools, the overhead of coordinating multiple agents rises disproportionately. Their practical selection rule is memorable: above roughly a <strong>45% single-agent baseline</strong>, adding agents was less likely to help.</p>
+
+  <p>The compute-controlled studies are harsher. When thinking-token budgets are held constant across five multi-agent variants, a single agent is either best or statistically indistinguishable from best at every budget except the lowest. Automatically generated multi-agent architectures underperformed chain-of-thought with self-consistency while costing up to <strong>10x more</strong>. And token spend alone explains about <strong>80% of the variance</strong> in agent benchmark performance — meaning most of the apparent multi-agent advantage is just more inference. A separate 2026 benchmark on optimization problems found no statistically significant correctness gain from multi-agent designs, but substantial increases in both cost and latency.</p>
+
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-orange);">
+      <div class="bet-inf-label" style="color: var(--bet-orange);">Finding 1</div>
+      <div class="bet-inf-title">Architecture decides error spread</div>
+      <div class="bet-inf-body">When errors occur, systems with centralized verification contained error propagation far better than independent peer agents. Who checks the work matters more than how many workers there are.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-red);">
+      <div class="bet-inf-label" style="color: var(--bet-red);">Finding 2</div>
+      <div class="bet-inf-title">Safety does not compose upward</div>
+      <div class="bet-inf-body">Anthropic found that organizations of individually aligned agents produced solutions that were more effective on the business goal and <em>less</em> ethical than a single agent — because work split into isolated subproblems with no agent tracking system-level goals. Single-agent safety results do not certify a multi-agent deployment.</div>
+    </div>
+  </div>
+
+  <div class="bet-callout bet-callout-success">
+    <div class="bet-callout-head">Where the Industry Converged</div>
+    <p>An orchestrator holding the full context, spawning ephemeral workers in fresh isolated contexts that return compressed summaries, with no peer-to-peer channels. Multi-agent buys <strong>context hygiene and wall-clock time</strong> — not accuracy at equal spend.</p>
+  </div>
+</div>
+
+<!-- Section: Compute bill -->
+<div class="bet-section" id="compute">
+  <h2>The Compute Bill: Tokens, Latency, Context</h2>
+  <p>Agent cost is not a per-call number; it is a per-<em>trajectory</em> number. Call count multiplies everything, so a five-round loop costs at least five chat turns, and multi-agent runs have been measured at roughly <strong>15x the tokens</strong> of a single chat interaction. Latency stacks the same way: every sequential step adds a full round trip, and long prompts add prefill time before the first token appears.</p>
+
+  <h3>The three-way tension: cost · latency · accuracy</h3>
+  <p>Almost every runtime decision in an agentic system is a negotiation between three quantities that pull against each other. You can usually optimize any two at the expense of the third — the engineering is in choosing which one the task lets you give up.</p>
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-label" style="color: var(--bet-purple);">Accuracy</div>
+      <div class="bet-inf-title">Rises with tokens, rounds, and model tier</div>
+      <div class="bet-inf-body">More reasoning tokens, more retries, a stronger model, and more verification all push quality up. The catch: ~80% of benchmark variance is explained by token spend alone, so "more accuracy" is very often just "more money" in disguise.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-label" style="color: var(--bet-blue);">Cost</div>
+      <div class="bet-inf-title">Per-trajectory, multiplied by call count</div>
+      <div class="bet-inf-body">Every extra round and every extra agent multiplies token spend — up to 15x for multi-agent runs. The cheapest wins are fewer rounds and difficulty-based routing, not blanket model downgrades.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-label" style="color: var(--bet-green);">Latency</div>
+      <div class="bet-inf-title">Stacks per sequential step, plus prefill</div>
+      <div class="bet-inf-body">Each sequential call adds a full round trip, and long prompts add prefill before the first token. Sub-2-second targets are effectively retrieval-only. Parallelism trades cost for wall-clock time; caching and streaming hide it.</div>
+    </div>
+  </div>
+  <div class="bet-callout bet-callout-spec">
+    <div class="bet-callout-head">Pick Two</div>
+    <p>Want higher accuracy cheaply? Expect higher latency (more sequential reasoning on smaller models). Want it fast and accurate? Expect higher cost (frontier model, parallel fan-out). Want it fast and cheap? Expect lower accuracy (one small-model call, no retries). Name the quantity the task permits you to sacrifice <em>before</em> you design the loop — that choice drives every lever below.</p>
+  </div>
+
+  <h3>Three levers, in order of impact</h3>
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-label" style="color: var(--bet-blue);">Lever 1</div>
+      <div class="bet-inf-title">Route by difficulty</div>
+      <div class="bet-inf-body">A small model classifies intent or extracts fields; the frontier model is called only on escalation or low confidence. Planner on the frontier, workers on mid-tier is the agent-specific version of the same move.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-label" style="color: var(--bet-purple);">Lever 2</div>
+      <div class="bet-inf-title">Cut rounds, not quality</div>
+      <div class="bet-inf-body">Tighter tool schemas, clearer stop conditions, and approval gates on expensive loops usually beat model downgrades. Fewer trajectory steps is the highest-leverage cost cut available.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-label" style="color: var(--bet-green);">Lever 3</div>
+      <div class="bet-inf-title">Right-size the context</div>
+      <div class="bet-inf-body">The RAG-vs-long-context tradeoff. The 2026 consensus is neither pure option: retrieve a generous candidate set, then reason over it in a long window.</div>
+    </div>
+  </div>
+
+  <p>On that third lever, the numbers are specific. Long context wins for small, stable corpora with cross-document synthesis; retrieval wins on cost, freshness, per-user permissions, and citation-level audit. Below a <strong>20% relevance ratio</strong>, RAG beat long context by 13+ F1 points, and <strong>sub-2-second latency targets are effectively retrieval-only</strong>.</p>
+
+  <div class="bet-callout bet-callout-warning">
+    <div class="bet-callout-head">The Quiet Fourth Lever: Memory</div>
+    <p>Memory is a tradeoff between capability and attack surface. Agents configured to write and retrieve memory more aggressively were measurably <strong>more exploitable</strong>, and existing prompt-injection defenses did not cover the memory-poisoning threat model. The working rule for multi-agent systems: no shared memory stores by default — private stores per agent, authenticated exchanges, governed shared stores with provenance and rollback.</p>
+  </div>
+</div>
+
+<!-- Section: Control -->
+<div class="bet-section" id="control">
+  <h2>Control: The Part That Gets Deferred and Then Doesn't</h2>
+  <p>Agents invert the classic security model. Traditional systems separate code from data; an LLM processes both through the same pathway, so <strong>any text it reads is potentially an instruction</strong>. Indirect prompt injection — malicious instructions hidden in a web page, email, calendar entry, or tool output — is therefore the primary risk for any tool-using agent.</p>
+
+  <div class="bet-stats">
+    <div class="bet-stat"><div class="num" style="color:var(--bet-red);">67%</div><div class="lbl">Of agents vulnerable to a scope violation, even with prompt-level guardrails</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-red);">43%</div><div class="lbl">Injection-via-tool-output attempts that succeeded</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-green);">31%→4%</div><div class="lbl">Attack success after layered architectural defenses</div></div>
+    <div class="bet-stat"><div class="num" style="color:var(--bet-green);">63%→4%</div><div class="lbl">Browser-task compromise, before vs. after safeguards</div></div>
+  </div>
+
+  <p>The empirical picture should shape architecture, not just policy. In one production-representative six-agent system, 67% of agents were vulnerable to at least one scope violation even with system-prompt-level guardrails, and injection via tool outputs succeeded in 43% of attempts. Layered architectural defenses — message signing with provenance, sanitization at agent boundaries, privilege-scoped tools, anomaly detection on inter-agent traffic — cut overall success from 31.2% to 4.2%. On browser tasks across 129 environments, compromise fell from 62.8% to 3.9% with safeguards. The consistent lesson: <strong>system-level constraints that limit what the agent can do outperform prompt-level instructions that ask it nicely.</strong></p>
+
+  <h3>The control stack</h3>
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-cyan);">
+      <div class="bet-inf-title">Identity &amp; credentials</div>
+      <div class="bet-inf-body">Distinct identity per agent, short-lived task-scoped credentials, least-privilege data access.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-blue);">
+      <div class="bet-inf-title">Allowlisted actions</div>
+      <div class="bet-inf-body">Allowlisted tools, destinations, and parameter ranges — with deterministic code validating paths, recipients, and amounts.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-purple);">
+      <div class="bet-inf-title">Reversible by default</div>
+      <div class="bet-inf-body">Read-only or reversible operations by default; code execution isolated from secrets.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-amber);">
+      <div class="bet-inf-title">Gated escalation</div>
+      <div class="bet-inf-body">Independent authorization or human approval for destructive, financial, or external-facing actions.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-green);">
+      <div class="bet-inf-title">Full trace logging</div>
+      <div class="bet-inf-body">User, agent, model, source, policy decision, tool call, parameters, result, memory write — every hop recorded.</div>
+    </div>
+  </div>
+
+  <div class="bet-callout bet-callout-danger">
+    <div class="bet-callout-head">The Most Human Tradeoff: Approval Fatigue</div>
+    <p>Human-in-the-loop is the last line of defense, but it degrades with use: repeated approvals produce approval fatigue, and automation bias means reviewers accept wrong suggestions precisely because the system usually gets it right. Oversight is worth spending on decisions that require judgment <em>and</em> land before an effect that is expensive to reverse. A human gate on every action is theater; a gate on the twelve irreversible actions is a control.</p>
+  </div>
+</div>
+
+<!-- Section: Evaluation -->
+<div class="bet-section" id="evaluation">
+  <h2>Evaluation: Where the Tradeoffs Become Invisible</h2>
+  <p>You cannot manage any of the above without measurement, and agent evaluation is structurally harder than model evaluation for three reasons:</p>
+  <div class="bet-card-grid">
+    <div class="bet-inf" style="border-top-color: var(--bet-orange);">
+      <div class="bet-inf-label" style="color: var(--bet-orange);">Reason 1</div>
+      <div class="bet-inf-title">Success is a world state</div>
+      <div class="bet-inf-body">Success is defined over a <em>state of the world</em> rather than a reference string — there is no single correct output to diff against.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-amber);">
+      <div class="bet-inf-label" style="color: var(--bet-amber);">Reason 2</div>
+      <div class="bet-inf-title">Many paths reach the goal</div>
+      <div class="bet-inf-body">Many action sequences reach the goal, so scoring against one annotated path is wrong.</div>
+    </div>
+    <div class="bet-inf" style="border-top-color: var(--bet-red);">
+      <div class="bet-inf-label" style="color: var(--bet-red);">Reason 3</div>
+      <div class="bet-inf-title">One task, many calls</div>
+      <div class="bet-inf-body">A single task spans many model calls in a live environment, making statistically adequate evaluation expensive — and because agents are stochastic, reliability requires repeated runs, multiplying cost again.</div>
+    </div>
+  </div>
+
+  <p>The field's central problem is a documented disconnect: agents that score well on standardized benchmarks frequently fail in deployment, because benchmarks prioritize task completion over cost efficiency, safety compliance, maintainability, and workflow integration.</p>
+
+  <div class="bet-callout bet-callout-spec">
+    <div class="bet-callout-head">A Standard for Results</div>
+    <p>A benchmark score without contamination exposure, repeated-run reliability, and run-cost reporting is not a result. Treat any agent demo — including your own — as a hypothesis about a distribution, not a proof.</p>
+  </div>
+</div>
+
+<!-- Section: Decision Explorer -->
+<div class="bet-section" id="explorer">
+  <h2>Decision Explorer</h2>
+  <p>Eight recurring decisions, each with a default, a condition for flipping it, and the failure you buy if you get it wrong. Click any decision:</p>
+
+  <div class="bet-dx">
+    <div class="bet-dx-tabs" id="bet-dx-tabs">
+      <div class="bet-dx-tab active" onclick="betShow(0)">Workflow vs agent</div>
+      <div class="bet-dx-tab" onclick="betShow(1)">Single vs multi</div>
+      <div class="bet-dx-tab" onclick="betShow(2)">Frontier vs routed</div>
+      <div class="bet-dx-tab" onclick="betShow(3)">RAG vs long context</div>
+      <div class="bet-dx-tab" onclick="betShow(4)">Memory scope</div>
+      <div class="bet-dx-tab" onclick="betShow(5)">Tool breadth</div>
+      <div class="bet-dx-tab" onclick="betShow(6)">Human approval</div>
+      <div class="bet-dx-tab" onclick="betShow(7)">Evaluation</div>
+    </div>
+    <div class="bet-dx-detail" id="bet-dx-detail"><!-- filled by JS --></div>
+  </div>
+</div>
+
+<!-- Section: Ledger -->
+<div class="bet-section" id="ledger">
+  <h2>The Tradeoff Ledger</h2>
+  <p>The same eight decisions as a one-page reference — the reusable artifact to keep open during a design review.</p>
+  <div class="bet-table-wrap">
+    <table class="bet-table">
+      <thead><tr><th>Decision</th><th>Default</th><th>Flip it when</th><th>Failure if you get it wrong</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Workflow vs agent</strong></td><td>Workflow</td><td>Step count is genuinely unknowable</td><td>Debugging a stochastic system for a deterministic problem</td></tr>
+        <tr><td><strong>Single vs multi-agent</strong></td><td>Single agent</td><td>Work is parallelizable and exceeds one context</td><td>2–15x cost for no measurable accuracy</td></tr>
+        <tr><td><strong>Frontier vs routed models</strong></td><td>Cascade with escalation</td><td>Ambiguity is the whole task</td><td>Premium prices on bulk work</td></tr>
+        <tr><td><strong>RAG vs long context</strong></td><td>Hybrid: retrieve generous, reason long</td><td>Corpus fits, is static, needs synthesis</td><td>Stale answers or context rot</td></tr>
+        <tr><td><strong>Memory scope</strong></td><td>Private by default</td><td>Shared knowledge with governance</td><td>Poisoning spreading across agents</td></tr>
+        <tr><td><strong>Tool breadth</strong></td><td>Few, well-documented tools</td><td>Genuine breadth of domains</td><td>Coordination tax, wider attack surface</td></tr>
+        <tr><td><strong>Human approval</strong></td><td>Irreversible actions only</td><td>Regulatory mandate</td><td>Approval fatigue masking real risk</td></tr>
+        <tr><td><strong>Evaluation</strong></td><td>Task success + cost + variance</td><td>High-stakes deployment</td><td>Benchmark score that doesn't transfer</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Section: Thesis -->
+<div class="bet-section" id="thesis">
+  <h2>The Thesis Worth Arguing</h2>
+  <div class="bet-quote">
+    <blockquote>"Every agentic decision is a purchase of flexibility with reliability, money, or control — and the field's 2026 evidence says most teams overpay."</blockquote>
+    <div class="attr">— The through-line of the ledger</div>
+  </div>
+  <p>Start at the simplest rung. Instrument cost and variance from day one. Add autonomy only where you can measure that it bought something. The most common mistake in 2026 is not picking the wrong framework — it is climbing to rung five for a rung-one problem, then paying 15x the tokens to debug a stochastic system that a deterministic one would have solved on the first try.</p>
+
+  <div class="bet-callout bet-callout-spec">
+    <div class="bet-callout-head">The Closing Thought</div>
+    <p>An agent that is confidently wrong two hundred times is not a model failure — it is a design failure, made the moment someone bought autonomy the task did not need and skipped the system-level check that would have caught it. Price the autonomy, instrument the trajectory, constrain the actions, and treat every demo as a hypothesis. The bet is unavoidable; overpaying for it is not.</p>
+  </div>
+</div>
+
+</div><!-- /.bet-content -->
+</div><!-- /.bet-layout -->
+</div><!-- /.bet-wrap -->
+
+<script>
+(function(){
+  var betDecisions = [
+    {title:'Workflow vs Agent', def:'Workflow', flip:'Step count is genuinely unknowable', fail:'Debugging a stochastic system for a deterministic problem', note:'Predefined code paths are debuggable, cheap, and repeatable. Buy model-directed control only when you cannot predict the steps.'},
+    {title:'Single vs Multi-Agent', def:'Single agent', flip:'Work is parallelizable and exceeds one context', fail:'2–15x cost for no measurable accuracy', note:'Multi-agent buys context hygiene and wall-clock time, not accuracy at equal spend. Above a ~45% single-agent baseline, extra agents rarely help.'},
+    {title:'Frontier vs Routed Models', def:'Cascade with escalation', flip:'Ambiguity is the whole task', fail:'Premium prices on bulk work', note:'Small model triages; frontier model handles escalations and low-confidence cases. Planner on frontier, workers on mid-tier.'},
+    {title:'RAG vs Long Context', def:'Hybrid: retrieve generous, reason long', flip:'Corpus fits, is static, needs synthesis', fail:'Stale answers or context rot', note:'Below a 20% relevance ratio, RAG beat long context by 13+ F1 points. Sub-2s latency targets are effectively retrieval-only.'},
+    {title:'Memory Scope', def:'Private by default', flip:'Shared knowledge with governance', fail:'Poisoning spreading across agents', note:'Aggressive memory writing/retrieval measurably raises exploitability. Governed shared stores need provenance and rollback.'},
+    {title:'Tool Breadth', def:'Few, well-documented tools', flip:'Genuine breadth of domains', fail:'Coordination tax, wider attack surface', note:'Past ~16 tools, coordination overhead rises disproportionately — and every tool is another injection vector.'},
+    {title:'Human Approval', def:'Irreversible actions only', flip:'Regulatory mandate', fail:'Approval fatigue masking real risk', note:'A gate on every action is theater. A gate on the twelve irreversible actions is a control.'},
+    {title:'Evaluation', def:'Task success + cost + variance', flip:'High-stakes deployment', fail:'Benchmark score that does not transfer', note:'Agents are stochastic: reliability needs repeated runs. Report contamination exposure, run-cost, and variance — or it is not a result.'},
+  ];
+  window.betShow = function(i){
+    var tabs = document.querySelectorAll('.bet-dx-tab');
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    tabs[i].classList.add('active');
+    var d = betDecisions[i];
+    document.getElementById('bet-dx-detail').innerHTML =
+      '<h4>'+d.title+'</h4>'+
+      '<div class="bet-dx-row"><span class="k">Default</span><span class="v default">'+d.def+'</span></div>'+
+      '<div class="bet-dx-row"><span class="k">Flip it when</span><span class="v flip">'+d.flip+'</span></div>'+
+      '<div class="bet-dx-row"><span class="k">Failure</span><span class="v fail">'+d.fail+'</span></div>'+
+      '<div class="bet-dx-row"><span class="k">Why</span><span class="v">'+d.note+'</span></div>';
+  };
+  window.betShow(0);
+})();
+
+document.addEventListener('DOMContentLoaded', function(){
+  var links = document.querySelectorAll('.bet-sidebar a');
+  var sections = [];
+  links.forEach(function(l){ var t = document.querySelector(l.getAttribute('href')); if(t) sections.push({el:t, link:l}); });
+  if(!sections.length) return;
+  function onScroll(){
+    var scrollY = window.scrollY + 120;
+    var active = sections[0];
+    sections.forEach(function(s){ if(s.el.offsetTop <= scrollY) active = s; });
+    links.forEach(function(l){ l.classList.remove('active'); });
+    active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
