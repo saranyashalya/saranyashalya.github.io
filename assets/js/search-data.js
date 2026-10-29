@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-the-llm-landscape-architectures-families-and-how-to-choose",
+        },{id: "post-attention-rebuilt-the-transformer-from-2017-to-2026",
+        
+          title: "Attention, Rebuilt: The Transformer from 2017 to 2026",
+        
+        description: "A field guide to the Transformer — what a single block actually does, and how nearly every square inside the 2017 diagram got swapped out while the outline stayed the same. From 65M-parameter translation models to hybrid expert stacks.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/attention-rebuilt-transformer-2017-to-2026/";
+          
+        },
+      },{id: "post-the-llm-landscape-architectures-families-and-how-to-choose",
         
           title: "The LLM Landscape: Architectures, Families, and How to Choose",
         
