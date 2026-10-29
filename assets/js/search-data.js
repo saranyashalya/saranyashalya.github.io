@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-attention-rebuilt-the-transformer-from-2017-to-2026",
+        },{id: "post-every-agent-is-a-bet-the-tradeoffs-that-decide-whether-it-ships",
+        
+          title: "Every Agent Is a Bet: The Tradeoffs That Decide Whether It Ships",
+        
+        description: "Agentic systems fail by being plausibly wrong, expensively, and repeatedly. This is a field guide to the tradeoffs that actually decide deployment — autonomy, multi-agent coordination, the compute bill, control, and evaluation — with the 2026 evidence for each, and a reusable decision ledger.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/every-agent-is-a-bet-ai-tradeoffs/";
+          
+        },
+      },{id: "post-attention-rebuilt-the-transformer-from-2017-to-2026",
         
           title: "Attention, Rebuilt: The Transformer from 2017 to 2026",
         
